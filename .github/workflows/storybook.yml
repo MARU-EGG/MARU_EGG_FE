@@ -49,7 +49,7 @@ jobs:
       - name: Extract Chromatic URL
         id: extract_url
         run: |
-          url=$(grep -o 'https://[^\"]*' chromatic-output.txt | head -n 1)
+          url=$(grep -oP 'https://[^ ]+-czwwzirjla.chromatic.com/' chromatic-output.txt | head -n 1)
           echo "storybookUrl=$url" >> $GITHUB_ENV
 
       - name: Comment on PR
