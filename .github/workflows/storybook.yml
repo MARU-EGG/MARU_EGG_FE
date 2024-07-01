@@ -43,11 +43,18 @@ jobs:
         id: chromatic
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        run: npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN
+        run: |
+          npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN | tee chromatic-output.txt
+
+      - name: Extract Chromatic URL
+        id: extract_url
+        run: |
+          url=$(grep -o 'https://[^\"]*' chromatic-output.txt | head -n 1)
+          echo "storybookUrl=$url" >> $GITHUB_ENV
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: 'storybook 확인좀용: ${{ steps.chromatic.outputs.storybookUrl }}'
+          message: 'storybook 확인좀용: ${{ env.storybookUrl }}'
