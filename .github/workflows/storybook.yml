@@ -8,13 +8,17 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  build:
+  storybook-build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -23,6 +27,12 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-storybook
+
       - name: Install dependencies
         run: npm install
 
@@ -30,6 +40,14 @@ jobs:
         run: npm run build-storybook
 
       - name: Publish to Chromatic
+        id: chromatic
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         run: npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: 'storybook 확인좀용: ${{ steps.chromatic.outputs.storybookUrl }}'
