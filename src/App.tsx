@@ -1,9 +1,13 @@
-// src/App.tsx
 import React from 'react';
-import TextArea from './ui/components/atom/text-area/text-area';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './routes/AppRoutes';
 
-function App() {
-  return <div className="p-4">test</div>;
-}
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
+};
 
 export default App;
