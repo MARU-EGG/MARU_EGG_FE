@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useUser, handleLogin } from '../../../api/admin-login';
-import { CircularProgress } from '@mui/material';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -73,7 +74,11 @@ export default function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {isLoading ? <CircularProgress color="inherit" /> : 'Sign in'}
+                {isLoading ? (
+                  'Sign in'
+                ) : (
+                  <Spin indicator={<LoadingOutlined style={{ color: 'white' }} spin />} size="large" />
+                )}
               </button>
             </div>
           </form>
