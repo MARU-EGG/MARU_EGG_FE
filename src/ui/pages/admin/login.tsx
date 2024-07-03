@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useUser, handleLogin } from '../../../api/admin-login';
+import { CircularProgress } from '@mui/material';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -66,13 +67,13 @@ export default function Login() {
                 />
               </div>
             </div>
-            {isError ? <div>다시 로그인해주세요</div> : ''}
+            {isError ? '' : <div>다시 로그인해주세요</div>}
             <div>
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                {isLoading ? <CircularProgress color="inherit" /> : 'Sign in'}
               </button>
             </div>
           </form>
