@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AdminRoutes from './AdminRoutes';
+import AdminRoutes from './admin-routes';
 import PageTest from '../ui/pages/page-test';
 
 const AppRoutes: React.FC = () => {
