@@ -12,6 +12,12 @@ const Uploader: React.FC = () => {
   const [uploading, setUploading] = useState(false);
   const handleDragger = useDragger(fileList, setFileList);
 
+  const handleTypeChange = (value: string) => {
+    setType(value);
+  };
+  const handleCategoryChange = (value: string) => {
+    setCategory(value);
+  };
   const handleUpload = () => {
     setUploading(true);
     // 업로드 로직넣기
@@ -29,6 +35,7 @@ const Uploader: React.FC = () => {
           <Select
             defaultValue="수시"
             className=" ml-2 w-40"
+            onChange={handleTypeChange}
             options={[
               { value: '수시', label: '수시' },
               { value: '정시', label: '정시' },
@@ -41,6 +48,7 @@ const Uploader: React.FC = () => {
           <Select
             defaultValue="모집요강"
             className=" ml-2 w-40"
+            onChange={handleCategoryChange}
             options={[
               { value: '모집요강', label: '모집요강' },
               { value: '입시결과', label: '입시결과' },
