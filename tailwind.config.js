@@ -14,6 +14,15 @@ module.exports = {
         mobile: '360px',
         desktop: '769px',
       },
+      fontFamily: {
+        pretendard: 'Pretendard',
+      },
+      fontSize: {
+        body1: ['16px', { lineHeight: '24px', fontWeight: '400' }],
+        body2: ['16px', { lineHeight: '24px', fontWeight: '500' }],
+        body3: ['14px', { lineHeight: '20px', fontWeight: '500' }],
+        title: ['24px', { lineHeight: '32px', fontWeight: '700' }],
+      },
     },
   },
   plugins: [],
