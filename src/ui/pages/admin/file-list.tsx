@@ -1,8 +1,8 @@
 import { Button, Divider, Select } from 'antd';
 import React, { useState } from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
-import Uploader from '../../components/molecule/admin/uploader';
 import { useForm } from '../../../hooks/useForm';
+import Uploader from '../../components/molecule/admin/Uploader';
 
 const FileList: React.FC = () => {
   const [category, setCategory] = useState('모집요강');
