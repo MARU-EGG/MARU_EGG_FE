@@ -24,14 +24,3 @@ export const Default: Story = {
     category: 'general',
   },
 };
-
-export const Disabled: Story = {
-  args: {
-    type: 'question',
-    category: 'general',
-  },
-  render: (args) => {
-    const [content, setContent] = React.useState<string>('Disabled');
-    return <ChatForm {...args} />;
-  },
-};
