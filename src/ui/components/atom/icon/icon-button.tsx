@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { cn } from '../../../../utils/style';
 
 interface IconButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   type?: 'submit' | undefined;
-  children: any;
+  children: ReactNode;
 }
 
 const IconButton = ({ onClick, disabled, type, children }: IconButtonProps) => {
