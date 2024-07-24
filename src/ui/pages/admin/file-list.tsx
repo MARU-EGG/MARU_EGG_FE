@@ -1,8 +1,8 @@
 import { Button, Divider, Select } from 'antd';
 import React, { useState } from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
-import { useForm } from '../../../hooks/useForm';
 import Uploader from '../../components/molecule/admin/Uploader';
+import { useHtmlFileSubmit } from '../../../hooks/use-html-file-submit.hooks';
 
 const FileList: React.FC = () => {
   const [category, setCategory] = useState('모집요강');
@@ -23,7 +23,7 @@ const FileList: React.FC = () => {
     try {
       if (fileList.length > 0) {
         const file = fileList[0].originFileObj as File; // 여기서 실제 File 객체를 가져옵니다.
-        const uploadData = useForm(type, category, file);
+        const uploadData = useHtmlFileSubmit(type, category, file);
         await uploadData();
         console.log('success');
       }
