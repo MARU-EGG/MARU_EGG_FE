@@ -16,11 +16,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(function Te
     <input
       ref={ref}
       type="text"
-      className={cn(
-        `w-full rounded-2xl bg-transparent px-5 py-2 text-body3`,
-        `placeholder:text-[#72777A]`,
-        disabled ? 'placeholder:text-red-500' : 'text-black',
-      )}
+      className={cn(`w-full rounded-2xl bg-transparent px-5 py-2 text-body3`, `placeholder:text-[#72777A]`)}
       value={value}
       placeholder={placeholder}
       disabled={disabled}
