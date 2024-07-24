@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import IconButton from './icon-button';
-import { ReactComponent as MenuIcon } from '../../../../../public/Menu.svg';
-import { ReactComponent as SendIcon } from '../../../../../public/Send.svg';
-import { ReactComponent as XIcon } from '../../../../../public/X.svg';
-import { ReactComponent as RefreshIcon } from '../../../../../public/Refresh.svg';
+import { ReactComponent as MenuIcon } from '../../../../assets/Menu.svg';
+import { ReactComponent as SendIcon } from '../../../../assets/Send.svg';
+import { ReactComponent as XIcon } from '../../../../assets/X.svg';
+import { ReactComponent as RefreshIcon } from '../../../../assets/Refresh.svg';
 
 const meta = {
   title: 'Example/IconButton',
