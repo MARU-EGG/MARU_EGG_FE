@@ -1,6 +1,6 @@
 import { llm_axiosInstance } from '../utils/axios';
 
-export const useForm = (type: string, category: string, html_file: File) => {
+export const useHtmlFileSubmit = (type: string, category: string, html_file: File) => {
   const formdata = new FormData();
   formdata.append('type', type);
   formdata.append('category', category);
