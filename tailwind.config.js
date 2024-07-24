@@ -9,6 +9,7 @@ module.exports = {
         'text-black': '#000000',
         'text-white': '#FFFFFF',
         'border-gray': '#EBEBEB',
+        'background-default': '#F2F2F3',
       },
       screens: {
         mobile: '360px',
