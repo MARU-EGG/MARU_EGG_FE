@@ -15,7 +15,6 @@ const meta = {
   },
   args: {
     onClick: () => console.log('Button clicked'),
-    type: 'submit',
   },
 } satisfies Meta<typeof IconButton>;
 
