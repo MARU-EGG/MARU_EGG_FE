@@ -4,7 +4,6 @@ import TextArea from './text-input';
 const meta = {
   title: 'Example/TextArea',
   component: TextArea,
-  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
