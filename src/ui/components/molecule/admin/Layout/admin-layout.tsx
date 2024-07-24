@@ -24,8 +24,8 @@ const AdminLayout: React.FC = () => {
         <SlideMenu />
       </Sider>
       <Layout className="site-layout">
-        <Header className="flex items-center bg-[#DFF4FF]">
-          <Breadcrumb separator=">" items={breadcrumpItems} className="pl-2 text-lg text-black" />
+        <Header className=" flex items-center bg-[#DFF4FF]">
+          <Breadcrumb separator=">" items={breadcrumpItems} className=" text-lg pl-2 text-black" />
         </Header>
         <Content style={{ margin: '16px 0' }}>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
