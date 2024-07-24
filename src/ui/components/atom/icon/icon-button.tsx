@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { cn } from '../../../../utils/style';
 
 interface IconButtonProps {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
-  children: any;
+  type?: 'submit' | undefined;
+  children: ReactNode;
 }
 
-const IconButton = ({ onClick, disabled, children }: IconButtonProps) => {
+const IconButton = ({ onClick, disabled, type, children }: IconButtonProps) => {
   return (
     <button
-      className={cn('cursor-pointer', disabled ? 'text-primary-blue' : 'text-black')}
+      className={cn(disabled ? 'cursor-default' : 'cursor-pointer')}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>
