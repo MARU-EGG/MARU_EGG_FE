@@ -4,10 +4,10 @@ import { cn } from '../../../../utils/style';
 interface PresetButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
-  children: React.ReactNode;
+  children: any;
 }
 
-const PresetButton = ({ onClick, children }: PresetButtonProps) => {
+const PresetButton = ({ onClick, disabled, children }: PresetButtonProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -18,17 +18,21 @@ const PresetButton = ({ onClick, children }: PresetButtonProps) => {
   };
 
   return (
-    <button
-      className={cn(
-        'cursor-pointer px-4 py-2 rounded-full border border-border-gray',
-        isClicked ? 'bg-primary-blue text-white' : 'bg-white text-black',
-        'hover:bg-primary-blue hover:text-white',
-        'focus:bg-primary-blue focus:text-white',
-      )}
-      onClick={handleClick}
-    >
-      {children}
-    </button>
+    <div className="px-4 py-2 border border-border-gray">
+      <button
+        className={cn(
+          'cursor-pointer font-Pretendard px-4 py-2 font-normal text-[12px]',
+          isClicked ? 'bg-primary-blue text-white' : 'bg-white text-black',
+          disabled ? 'bg-border-gray' : '',
+          'hover:bg-primary-blue hover:text-white',
+          'focus:bg-primary-blue focus:text-white',
+        )}
+        onClick={handleClick}
+        disabled={disabled}
+      >
+        {children}
+      </button>
+    </div>
   );
 };
 
