@@ -4,6 +4,7 @@ import IconButton from '../../../atom/icon/icon-button';
 import { ReactComponent as SendIcon } from '../../../../../assets/Send.svg';
 import { postQuestion } from '../../../../../api/post-question';
 import { cn } from '../../../../../utils/style';
+import useChatStore from '../../../../../store/chat-store';
 
 interface ChatFormProps {
   type: 'SUSI' | 'PYEONIP' | 'JEONGSI';
@@ -22,8 +23,10 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      useChatStore.getState().addMessage({ content, role: 'user' });
       const response = await postQuestion(category, type, content);
       console.log('전송 성공:', response);
+      useChatStore.getState().addMessage({ content: response.answer.content, role: 'system' });
       setContent('');
       setDisabled(true);
     } catch (error) {
