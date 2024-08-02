@@ -10,11 +10,10 @@ interface HeaderProps {
 }
 
 const Header = ({ type }: HeaderProps) => {
-  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleRefreshClick = () => {
-    navigate('/');
+    window.location.reload();
     console.log('새로고침');
   };
 
