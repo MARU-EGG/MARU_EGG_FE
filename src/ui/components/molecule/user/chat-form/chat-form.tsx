@@ -24,13 +24,16 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
     e.preventDefault();
     try {
       useChatStore.getState().addMessage({ content, role: 'user' });
-      const response = await postQuestion(category, type, content);
-      console.log('전송 성공:', response);
-      useChatStore.getState().addMessage({ content: response.answer.content, role: 'system' });
+      useChatStore.getState().addMessage({ content: '답변을 생성중입니다...', role: 'system' });
+      useChatStore.getState().setLoading(true);
       setContent('');
+      const response = await postQuestion(category, type, content);
+      useChatStore.getState().updateLastMessage(response.answer.content);
+      useChatStore.getState().setLoading(false);
       setDisabled(true);
     } catch (error) {
-      console.error('전송 실패:', error);
+      useChatStore.getState().setLoading(false);
+      useChatStore.getState().updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
     }
   };
 
