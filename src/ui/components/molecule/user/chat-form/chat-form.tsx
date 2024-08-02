@@ -6,8 +6,8 @@ import { postQuestion } from '../../../../../api/post-question';
 import { cn } from '../../../../../utils/style';
 
 interface ChatFormProps {
-  type: string;
-  category: string;
+  type: 'SUSI' | 'PYEONIP' | 'JEONGSI';
+  category?: 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST' | 'PASSING_RESULT' | 'ADMISSION_GUIDELINE';
 }
 
 const ChatForm = ({ type, category }: ChatFormProps) => {
@@ -32,10 +32,7 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
   };
 
   return (
-    <form
-      className={cn('flex w-96 flex-nowrap rounded-2xl px-4 py-2', 'bg-background-default')}
-      onSubmit={handleSubmit}
-    >
+    <form className={cn('flex flex-nowrap rounded-2xl px-4 py-2', 'bg-background-default')} onSubmit={handleSubmit}>
       <TextInput value={content} onValueChange={handleChange} placeholder="메시지를 입력해주세요." />
       <IconButton type="submit" disabled={disabled}>
         <SendIcon />
