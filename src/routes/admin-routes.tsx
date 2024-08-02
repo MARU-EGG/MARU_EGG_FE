@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from '../ui/pages/admin/login';
 import PrivateRoute from './private-route';
 import FileList from '../ui/pages/admin/file-list';
 import AdminLayout from '../ui/components/molecule/admin/Layout/admin-layout';
+import Login from '../ui/pages/admin/login';
 
 const AdminRoutes: React.FC = () => {
   const token = sessionStorage.getItem('Authorization');
