@@ -23,7 +23,7 @@ const Header = ({ type }: HeaderProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between px-3 py-2">
+    <div className="fixed flex w-full items-center justify-between bg-white px-3 py-2">
       <IconButton onClick={handleRefreshClick}>
         <RefreshIcon />
       </IconButton>
