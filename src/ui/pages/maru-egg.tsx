@@ -13,10 +13,10 @@ const MaruEgg: React.FC = () => {
   };
 
   return (
-    <div className="min-w-[360px]">
+    <div className="h-full min-w-[360px] bg-background-default">
       <Header type={type} />
 
-      <div className="max-h-max min-h-full w-full bg-background-default px-4 pb-24 pt-16">
+      <div className="w-full px-4 pb-24 pt-16">
         <ChatCard
           content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
             궁금하신 내용 안내 도와드리겠습니다.  
