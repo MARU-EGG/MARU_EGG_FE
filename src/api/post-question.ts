@@ -1,6 +1,6 @@
 import { server_axiosInstance } from '../utils/axios';
 
-export async function postQuestion(category: string, type: string, content: string): Promise<any> {
+export async function postQuestion(category: string | undefined, type: string, content: string): Promise<any> {
   const data = {
     type,
     category,
