@@ -7,13 +7,12 @@ interface ChatCardProps {
   content: string;
   role: 'user' | 'system';
 }
-
 const ChatCard = ({ content, role }: ChatCardProps) => {
   return (
     <div>
       {role === 'user' ? null : <img src={maru} className="mb-2 h-8 w-8" />}
       <div
-        className={cn('flex h-auto flex-col-reverse', {
+        className={cn('flex h-auto flex-col-reverse py-3', {
           'items-end justify-end': role === 'user',
           'items-start justify-start': role !== 'user',
         })}
