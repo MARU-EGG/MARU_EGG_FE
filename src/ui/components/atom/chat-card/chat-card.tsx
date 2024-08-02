@@ -13,13 +13,13 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
     <div>
       {role === 'user' ? null : <img src={maru} className="mb-2 h-8 w-8" />}
       <div
-        className={cn('flex h-auto flex-col-reverse', {
+        className={cn('flex h-auto max-w-72 flex-col-reverse', {
           'items-end justify-end': role === 'user',
           'items-start justify-start': role !== 'user',
         })}
       >
         <div
-          className={cn('flex w-auto max-w-72 rounded-md bg-white px-5 py-3 text-black', {
+          className={cn('flex w-auto rounded-md bg-white px-5 py-3 text-black', {
             'justify-end bg-primary-blue text-white': role === 'user',
             'justify-start text-left': role !== 'user',
           })}
