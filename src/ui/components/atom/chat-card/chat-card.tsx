@@ -13,7 +13,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
     <div>
       {role === 'user' ? null : <img src={maru} className="mb-2 h-8 w-8" />}
       <div
-        className={cn('flex h-auto max-w-72 flex-col-reverse', {
+        className={cn('flex h-auto flex-col-reverse', {
           'items-end justify-end': role === 'user',
           'items-start justify-start': role !== 'user',
         })}
