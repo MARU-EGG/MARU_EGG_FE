@@ -1,7 +1,7 @@
 import { Button, Divider, Select } from 'antd';
 import React, { useState } from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
-import Uploader from '../../components/molecule/admin/Uploader';
+import Uploader from '../../components/admin/Uploader';
 import { useHtmlFileSubmit } from '../../../hooks/use-html-file-submit.hooks';
 
 const FileList: React.FC = () => {
