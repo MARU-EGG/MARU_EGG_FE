@@ -10,8 +10,7 @@ const meta = {
     layout: 'centered',
   },
   args: {
-    type: 'question',
-    category: 'general',
+    type: 'SUSI',
   },
 } satisfies Meta<typeof ChatForm>;
 
@@ -20,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    type: 'question',
-    category: 'general',
+    type: 'SUSI',
+    category: 'PAST_QUESTIONS',
   },
 };
