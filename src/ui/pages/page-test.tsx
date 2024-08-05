@@ -1,6 +1,6 @@
 import React from 'react';
+import AdminLayout from '../components/admin/Layout/admin-layout';
 import ChatForm from '../components/molecule/user/chat-form/chat-form';
-import ChatCard from '../components/atom/chat-card/chat-card';
 
 const PageTest: React.FC = () => {
   return (
