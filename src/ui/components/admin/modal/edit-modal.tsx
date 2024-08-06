@@ -41,9 +41,8 @@ const EditModal = ({
   const handleEditSubmit = async () => {
     try {
       await executeWithLoading(async () => {
-        await AdminEditAnswer(modalContentId, modalContent);
+        await AdminEditAnswer(modalContentId, content);
         await AdminCheckQuestionAnswer({ questionId, check: true });
-        console.log('편집 및 확인 완료');
       });
     } catch (err) {
       setEditStatus(false);
@@ -54,7 +53,6 @@ const EditModal = ({
   const handleCheckToggle = async () => {
     await executeWithLoading(async () => {
       await AdminCheckQuestionAnswer({ questionId, check: !isChecked });
-      console.log('검토 상태 변경 완료');
     });
   };
 
