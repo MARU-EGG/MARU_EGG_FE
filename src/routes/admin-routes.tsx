@@ -3,9 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './private-route';
 import FileList from '../ui/pages/admin/file-list';
 import Login from '../ui/pages/admin/login';
-import QuestionCheck from '../ui/pages/admin/question-check';
 import AdminLayout from '../ui/components/admin/Layout/admin-layout';
 import { getCookie } from '../utils/cookies';
+import QuestionCheck from '../ui/pages/admin/question-check';
 const AdminRoutes: React.FC = () => {
   const token = getCookie('accessToken');
   return (

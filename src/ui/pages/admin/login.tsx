@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { AdminLogin } from '../../../api/admin-login';
+import React, { useState, useEffect } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { AdminLogin } from '../../../api/admin-login';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
