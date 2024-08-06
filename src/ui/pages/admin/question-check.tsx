@@ -2,19 +2,9 @@ import { Divider, Select, Table, TableProps, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adminQuestionCheck } from '../../../api/admin-question-check';
 import EditModal from '../../components/admin/modal/edit-modal';
+import useCheckQuestionAnswerStore, { QuestionAnswerState } from '../../../store/admin/check-question-answer-store';
 
-interface DataType {
-  id: number;
-  content: string;
-  viewCount: string;
-  isChecked: boolean;
-  answer: {
-    id: number;
-    content: string;
-  };
-}
-
-const columns: TableProps<DataType>['columns'] = [
+const columns: TableProps<QuestionAnswerState>['columns'] = [
   {
     title: '질문내용',
     dataIndex: 'content',
@@ -34,13 +24,13 @@ const columns: TableProps<DataType>['columns'] = [
 ];
 
 const QuestionCheck = () => {
+  const { questionData, updateQuestionData } = useCheckQuestionAnswerStore();
   const [type, setType] = useState('SUSI');
   const [category, setCategory] = useState('');
-  const [data, setData] = useState<DataType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState<DataType | null>(null);
+  const [selectedQuestion, setSelectedQuestion] = useState<QuestionAnswerState | null>(null);
 
   const handleTypeChange = (value: string) => {
     setType(value);
@@ -50,7 +40,7 @@ const QuestionCheck = () => {
     setCategory(value);
   };
 
-  const handleRowClick = (record: DataType) => {
+  const handleRowClick = (record: QuestionAnswerState) => {
     setSelectedQuestion(record);
     setModalOpen(true);
   };
@@ -60,17 +50,7 @@ const QuestionCheck = () => {
       setLoading(true);
       try {
         const response = await adminQuestionCheck({ type, category });
-        const formattedData = response.map((item: any) => ({
-          id: item.id,
-          content: item.content,
-          viewCount: item.viewCount.toString(),
-          isChecked: item.isChecked,
-          answer: {
-            id: item.answer.id,
-            content: item.answer.content,
-          },
-        }));
-        setData(formattedData);
+        updateQuestionData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -79,7 +59,7 @@ const QuestionCheck = () => {
     };
 
     fetchData();
-  }, [type, category]);
+  }, [type, category, updateQuestionData]);
 
   return (
     <div className="w-full">
@@ -115,7 +95,7 @@ const QuestionCheck = () => {
       <div className="mx-8 my-3">
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={questionData}
           loading={loading}
           rowKey="id"
           onRow={(record) => ({
@@ -124,17 +104,7 @@ const QuestionCheck = () => {
         />
       </div>
 
-      {selectedQuestion && (
-        <EditModal
-          open={modalOpen}
-          setOpen={setModalOpen}
-          modalTitle={selectedQuestion.content}
-          modalContent={selectedQuestion.answer.content}
-          modalContentId={selectedQuestion.answer.id}
-          questionId={selectedQuestion.id}
-          isChecked={selectedQuestion.isChecked}
-        />
-      )}
+      {selectedQuestion && <EditModal open={modalOpen} setOpen={setModalOpen} questionId={selectedQuestion.id} />}
     </div>
   );
 };
