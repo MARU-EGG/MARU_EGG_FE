@@ -57,7 +57,7 @@ const FileList: React.FC = () => {
           return acc;
         }, []);
         console.log(dataList);
-        setDataList(formattedData); // Overwrite the existing dataList instead of appending
+        setDataList(formattedData);
       } catch (error) {
         console.error('다운로드 에러', error);
       } finally {
