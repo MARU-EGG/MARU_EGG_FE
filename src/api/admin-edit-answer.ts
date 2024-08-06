@@ -1,0 +1,21 @@
+import { server_axiosInstance } from '../utils/axios';
+import { getCookie } from '../utils/cookies';
+
+export async function AdminEditAnswer(id: number, content: string): Promise<any> {
+  const data = {
+    id,
+    content,
+  };
+
+  try {
+    const response = await server_axiosInstance.post('/api/admin/answers', JSON.stringify(data), {
+      headers: {
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error: any) {
+    throw new Error('Post Failed');
+  }
+}
