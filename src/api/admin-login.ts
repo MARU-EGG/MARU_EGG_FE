@@ -1,34 +1,30 @@
-import axios from 'axios';
-import useSWR, { mutate } from 'swr';
+import { server_axiosInstance } from '../utils/axios';
+import { getCookie, removeCookie, setCookie } from '../utils/cookies';
 
-interface LoginResponse {
-  token: string;
-  user: {
-    email: string;
+export async function AdminLogin(email: string, password: string) {
+  const data = {
+    email,
+    password,
   };
-}
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-
-export async function login(email: string, password: string): Promise<LoginResponse> {
-  const response = await axios.post<LoginResponse>('경로변경넣어야됌', { email, password }, { withCredentials: true });
-  return response.data;
-}
-
-export function useUser() {
-  const { data, error } = useSWR<LoginResponse>('경로넣어야행', fetcher);
-  return {
-    user: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-}
-
-export async function handleLogin(email: string, password: string): Promise<void> {
   try {
-    const userData = await login(email, password);
-    mutate('경로헤헿콩', userData, false);
-  } catch (err: any) {
-    throw new Error(err.message);
+    if (getCookie('accessToken')) {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+    }
+
+    const response = await server_axiosInstance.post('/api/auth/sign-in', data);
+    const accessToken: string = response.headers['authorization'];
+    const refreshToken: string = response.headers['authorization-refresh'];
+
+    setCookie('accessToken', accessToken.split(' ')[1], { path: '/admin', secure: true, sameSite: 'lax' });
+    setCookie('refreshToken', refreshToken.split(' ')[1], { path: '/admin', secure: true, sameSite: 'lax' });
+  } catch (error: any) {
+    throw new Error('Login Failed - Server network failed');
   }
+}
+
+export function AdminLogout() {
+  removeCookie('accessToken', { path: '/admin', secure: true, sameSite: 'lax' });
+  removeCookie('refreshToken', { path: '/admin', secure: true, sameSite: 'lax' });
 }

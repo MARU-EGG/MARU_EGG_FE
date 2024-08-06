@@ -9,5 +9,5 @@ export const llm_axiosInstance = axios.create({
 export const server_axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SPRING_SERVER_API_ADDRESS,
   timeout: 20000,
-  withCredentials: false,
+  withCredentials: true,
 });

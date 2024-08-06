@@ -7,7 +7,7 @@ export interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ authenticated, component }: PrivateRouteProps) => {
-  return authenticated ? component : <Navigate to="/login"></Navigate>;
+  return authenticated ? component : <Navigate to="/admin/login"></Navigate>;
 };
 
 export default PrivateRoute;
