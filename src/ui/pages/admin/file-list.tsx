@@ -30,7 +30,7 @@ const FileList: React.FC = () => {
     setUploading(true);
     try {
       if (fileList.length > 0) {
-        const file = fileList[0].originFileObj as File; // 여기서 실제 File 객체를 가져옵니다.
+        const file = fileList[0].originFileObj as File;
         const uploadData = useHtmlFileSubmit(type, category, file);
         await uploadData();
         console.log('success');
