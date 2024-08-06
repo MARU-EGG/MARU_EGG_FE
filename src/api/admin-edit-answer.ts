@@ -11,6 +11,7 @@ export async function AdminEditAnswer(id: number, content: string): Promise<any>
     const response = await server_axiosInstance.post('/api/admin/answers', JSON.stringify(data), {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
+        'Content-Type': 'application/json',
       },
     });
     console.log(response.data);

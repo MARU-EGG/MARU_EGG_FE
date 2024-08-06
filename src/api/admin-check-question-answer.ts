@@ -14,6 +14,7 @@ export async function AdminCheckQuestionAnswer({ questionId, check }: AdminCheck
     const response = await server_axiosInstance.post('/api/admin/questions/check', JSON.stringify(data), {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
+        'Content-Type': 'application/json',
       },
     });
     return response.data;

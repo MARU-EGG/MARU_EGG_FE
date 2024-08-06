@@ -14,8 +14,8 @@ export async function AdminLogin(email: string, password: string) {
     }
 
     const response = await server_axiosInstance.post('/api/auth/sign-in', data);
-    const accessToken: string = response.headers['jwt-token'];
-    const refreshToken: string = response.headers['jwt-token-refresh'];
+    const accessToken: string = response.headers['authorization'];
+    const refreshToken: string = response.headers['authorization-refresh'];
 
     setCookie('accessToken', accessToken.split(' ')[1], { path: '/admin', secure: true, sameSite: 'lax' });
     setCookie('refreshToken', refreshToken.split(' ')[1], { path: '/admin', secure: true, sameSite: 'lax' });
