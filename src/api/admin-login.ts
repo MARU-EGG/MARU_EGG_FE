@@ -23,3 +23,8 @@ export async function AdminLogin(email: string, password: string) {
     throw new Error('Login Failed - Server network failed');
   }
 }
+
+export function AdminLogout() {
+  removeCookie('accessToken', { path: '/admin', secure: true, sameSite: 'lax' });
+  removeCookie('refreshToken', { path: '/admin', secure: true, sameSite: 'lax' });
+}
