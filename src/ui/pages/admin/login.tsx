@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminLogin } from '../../../api/admin-login';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,12 +22,17 @@ export default function Login() {
     } catch (err: any) {
       setError(err.message);
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate('/admin/question/list');
-      }, 1000);
+      setIsLoading(false);
+      setLoginSuccess(true);
     }
   };
+
+  useEffect(() => {
+    if (loginSuccess === true) {
+      navigate('/admin/question/list');
+      window.location.reload();
+    }
+  }, [loginSuccess]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
