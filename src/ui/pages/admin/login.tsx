@@ -21,8 +21,10 @@ export default function Login() {
     } catch (err: any) {
       setError(err.message);
     } finally {
-      setIsLoading(false);
-      navigate('/admin/question/list');
+      setTimeout(() => {
+        setIsLoading(false);
+        navigate('/admin/question/list');
+      }, 1000);
     }
   };
 
