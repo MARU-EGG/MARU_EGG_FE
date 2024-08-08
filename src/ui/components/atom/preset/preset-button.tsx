@@ -4,7 +4,7 @@ import { cn } from '../../../../utils/style';
 interface PresetButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
-  children: any;
+  children: string;
 }
 
 const PresetButton = ({ onClick, disabled, children }: PresetButtonProps) => {
@@ -15,25 +15,20 @@ const PresetButton = ({ onClick, disabled, children }: PresetButtonProps) => {
       onClick(e);
     }
     setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 200); // 클릭 후 200ms 후에 초기화
   };
 
-  return (
-    <div className="px-4 py-2 border border-border-gray">
-      <button
-        className={cn(
-          'cursor-pointer font-Pretendard px-4 py-2 font-normal text-[12px]',
-          isClicked ? 'bg-primary-blue text-white' : 'bg-white text-black',
-          disabled ? 'bg-border-gray' : '',
-          'hover:bg-primary-blue hover:text-white',
-          'focus:bg-primary-blue focus:text-white',
-        )}
-        onClick={handleClick}
-        disabled={disabled}
-      >
-        {children}
-      </button>
-    </div>
-  );
+const buttonClasses = cn(
+  'cursor-pointer rounded-full border border-gray text-black bg-white',
+  isClicked ? 'bg-primary-blue text-white border-primary-blue' : 'bg-white text-black',
+  disabled ? 'bg-border-gray cursor-not-allowed text-border-gray bg-text-white' : '',
+);
+
+return (
+  <button className={buttonClasses} onClick={handleClick} disabled={disabled}>
+    {children}
+  </button>
+);
 };
 
 export default PresetButton;
