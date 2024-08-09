@@ -11,7 +11,7 @@ export const useHtmlFileSubmit = (type: string, category: string, html_file: Fil
     console.log(formdata.get('category'));
     console.log(formdata.get('html_file'));
     try {
-      const response = await llm_axiosInstance.post('/upload_html/', formdata, {
+      const response = await llm_axiosInstance.post('/upload_pdf/', formdata, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

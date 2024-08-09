@@ -3,29 +3,26 @@ import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
 import { AdminEditAnswer } from '../../../../api/admin-edit-answer';
 import { AdminCheckQuestionAnswer } from '../../../../api/admin-check-question-answer';
+import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
 
 interface CustomModalProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  modalTitle: string;
-  modalContent: string;
-  modalContentId: number;
   questionId: number;
-  isChecked: boolean;
 }
 
-const EditModal = ({
-  open,
-  setOpen,
-  modalTitle,
-  modalContent,
-  modalContentId,
-  questionId,
-  isChecked,
-}: CustomModalProps) => {
+const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
+  const { questionData, updateCheck, updateAnswer } = useCheckQuestionAnswerStore();
+  const question = questionData.find((question) => question.id === questionId);
+
+  if (!question) {
+    return null;
+  }
+
+  const { content: modalTitle, answer, isChecked } = question;
   const [editStatus, setEditStatus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState(modalContent);
+  const [content, setContent] = useState(answer.content);
 
   const executeWithLoading = async (action: () => Promise<void>) => {
     setLoading(true);
@@ -41,8 +38,12 @@ const EditModal = ({
   const handleEditSubmit = async () => {
     try {
       await executeWithLoading(async () => {
-        await AdminEditAnswer(modalContentId, content);
-        await AdminCheckQuestionAnswer({ questionId, check: true });
+        await AdminEditAnswer(answer.id, content);
+        updateAnswer(answer.id, content);
+        if (!isChecked) {
+          await AdminCheckQuestionAnswer({ questionId, check: true });
+          updateCheck(questionId, true);
+        }
       });
     } catch (err) {
       setEditStatus(false);
@@ -51,8 +52,10 @@ const EditModal = ({
   };
 
   const handleCheckToggle = async () => {
+    const newCheckStatus = !isChecked;
     await executeWithLoading(async () => {
-      await AdminCheckQuestionAnswer({ questionId, check: !isChecked });
+      await AdminCheckQuestionAnswer({ questionId, check: newCheckStatus });
+      updateCheck(questionId, newCheckStatus);
     });
   };
 
@@ -86,7 +89,6 @@ const EditModal = ({
             질문-답변 미확인 상태 변경
           </Button>
         ),
-
         editStatus ? (
           <Button key="submit" onClick={handleEditSubmit} loading={loading} type="primary">
             편집완료
@@ -98,7 +100,7 @@ const EditModal = ({
         ),
       ]}
     >
-      {editStatus ? <TextArea rows={25} value={content} onChange={handleChange} /> : <div>{modalContent}</div>}
+      {editStatus ? <TextArea rows={25} value={content} onChange={handleChange} /> : <div>{answer.content}</div>}
     </Modal>
   );
 };
