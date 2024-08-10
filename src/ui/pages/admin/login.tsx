@@ -78,7 +78,6 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-lg sm:leading-6"
               />
-
             </div>
           </div>
           {error && <div className="text-red-500">{error}</div>}
