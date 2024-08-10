@@ -19,9 +19,9 @@ jobs:
 
       - name: Add remote-url
         run: |
-          git remote add forked-repo https://[swgvenghy]:${{ secrets.FORKED_REPO_TOKEN }}@github.com/[swgvenghy]/[MARU_EGG_FE]
-          git config user.name [swgvenghy]
-          git config user.email [duekzim@gmail.com]
+          git remote add forked-repo https://swgvenghy:${{ secrets.FORKED_REPO_TOKEN }}@github.com/swgvenghy/MARU_EGG_FE
+          git config user.name swgvenghy
+          git config user.email duekzim@gmail.com
 
       - name: Push changes to forked-repo
         run: |
