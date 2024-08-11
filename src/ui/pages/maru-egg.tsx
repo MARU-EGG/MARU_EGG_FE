@@ -9,8 +9,11 @@ import PresetButton from '../components/atom/preset/preset-button';
 const MaruEgg: React.FC = () => {
   const { setSelectedType, type } = useTypeStore();
   const { messages } = useChatStore();
+  const [selectedButton, setSelectedButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | null>(null);
+
   const handleButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
     setSelectedType(selectedType);
+    setSelectedButton(selectedType);
   };
 
   return (
@@ -25,9 +28,15 @@ const MaruEgg: React.FC = () => {
           role="system"
         />
         <div className="flex space-x-2">
-          <PresetButton onClick={() => handleButtonClick('SUSI')}>수시</PresetButton>
-          <PresetButton onClick={() => handleButtonClick('PYEONIP')}>편입</PresetButton>
-          <PresetButton onClick={() => handleButtonClick('JEONGSI')}>정시</PresetButton>
+          <PresetButton onClick={() => handleButtonClick('SUSI')} isSelected={selectedButton === 'SUSI'}>
+            수시
+          </PresetButton>
+          <PresetButton onClick={() => handleButtonClick('PYEONIP')} isSelected={selectedButton === 'PYEONIP'}>
+            편입
+          </PresetButton>
+          <PresetButton onClick={() => handleButtonClick('JEONGSI')} isSelected={selectedButton === 'JEONGSI'}>
+            정시
+          </PresetButton>
         </div>
         {type !== null && (
           <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
