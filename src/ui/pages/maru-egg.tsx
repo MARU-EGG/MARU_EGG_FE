@@ -4,6 +4,7 @@ import useTypeStore from '../../store/type-store';
 import ChatCard from '../components/atom/chat-card/chat-card';
 import ChatForm from '../components/molecule/user/chat-form/chat-form';
 import useChatStore from '../../store/chat-store';
+import PresetButton from '../components/atom/preset/preset-button';
 
 const MaruEgg: React.FC = () => {
   const { setSelectedType, type } = useTypeStore();
@@ -23,9 +24,11 @@ const MaruEgg: React.FC = () => {
             알아보고 싶은 전형을 선택해주세요!`}
           role="system"
         />
-        <button onClick={() => handleButtonClick('SUSI')}>Select SUSI</button>
-        <button onClick={() => handleButtonClick('PYEONIP')}>Select PYEONIP</button>
-        <button onClick={() => handleButtonClick('JEONGSI')}>Select JEONGSI</button>
+        <div className="flex space-x-2">
+          <PresetButton onClick={() => handleButtonClick('SUSI')}>수시</PresetButton>
+          <PresetButton onClick={() => handleButtonClick('PYEONIP')}>편입</PresetButton>
+          <PresetButton onClick={() => handleButtonClick('JEONGSI')}>정시</PresetButton>
+        </div>
         {type !== null && (
           <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
         )}
