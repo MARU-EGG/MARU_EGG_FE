@@ -13,7 +13,7 @@ const MaruEgg: React.FC = () => {
   };
 
   return (
-    <div className="h-full min-w-[360px] bg-background-default">
+    <div className="h-screen min-w-[360px] bg-background-default">
       <Header type={type} />
 
       <div className="w-full px-4 pb-24 pt-16">

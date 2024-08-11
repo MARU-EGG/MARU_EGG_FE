@@ -33,7 +33,7 @@ const Uploader: React.FC<UploaderProps> = ({ fileList, setFileList }) => {
   return (
     <div className="w-full">
       <Dragger className="w-full" maxCount={1} {...props}>
-        <p className="text-blue-600 text-6xl">
+        <p className="6xl·text-blue-600">
           <InboxOutlined />
         </p>
         <p className="text-xl">파일을 드래그해주세요</p>
