@@ -4,12 +4,12 @@ export const useHtmlFileSubmit = (type: string, category: string, html_file: Fil
   const formdata = new FormData();
   formdata.append('type', type);
   formdata.append('category', category);
-  formdata.append('html_file', html_file);
+  formdata.append('pdf_file', html_file);
 
   const uploadData = async () => {
     console.log(formdata.get('type'));
     console.log(formdata.get('category'));
-    console.log(formdata.get('html_file'));
+    console.log(formdata.get('pdf_file'));
     try {
       const response = await llm_axiosInstance.post('/upload_pdf/', formdata, {
         headers: {

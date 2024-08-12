@@ -10,30 +10,31 @@ interface UploaderProps {
 }
 
 const Uploader: React.FC<UploaderProps> = ({ fileList, setFileList }) => {
-  const props: UploadProps = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: (file) => {
-      setFileList([...fileList, { ...file, originFileObj: file }]);
+  const handleRemove = (file: UploadFile<File>) => {
+    const updatedFileList = fileList.filter((item) => item.uid !== file.uid);
+    setFileList(updatedFileList);
+  };
 
-      return false;
-    },
+  const handleBeforeUpload = (file: File) => {
+    setFileList((prevList) => [...prevList, { ...file, originFileObj: file } as unknown as UploadFile<File>]);
+    return false;
+  };
 
+  const uploadProps: UploadProps = {
+    onRemove: handleRemove,
+    beforeUpload: handleBeforeUpload,
     showUploadList: {
       showPreviewIcon: true,
       showRemoveIcon: true,
     },
     fileList,
+    maxCount: 5,
   };
 
   return (
     <div className="w-full">
-      <Dragger className="w-full" maxCount={1} {...props}>
-        <p className="6xl·text-blue-600">
+      <Dragger className="w-full" {...uploadProps}>
+        <p className="text-6xl text-blue-600">
           <InboxOutlined />
         </p>
         <p className="text-xl">파일을 드래그해주세요</p>
