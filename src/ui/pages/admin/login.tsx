@@ -18,11 +18,12 @@ export default function Login() {
     setIsLoading(true);
     try {
       await AdminLogin(email, password);
+      setLoginSuccess(true);
     } catch (err: any) {
       setError(err.message);
+      setLoginSuccess(false);
     } finally {
       setIsLoading(false);
-      setLoginSuccess(true);
     }
   };
 
