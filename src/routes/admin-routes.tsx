@@ -6,6 +6,7 @@ import Login from '../ui/pages/admin/login';
 import AdminLayout from '../ui/components/admin/Layout/admin-layout';
 import { getCookie } from '../utils/cookies';
 import QuestionCheck from '../ui/pages/admin/question-check';
+import GenerateQuestion from '../ui/pages/admin/generate-question';
 const AdminRoutes: React.FC = () => {
   const token = getCookie('accessToken');
   return (
@@ -14,6 +15,7 @@ const AdminRoutes: React.FC = () => {
       <Route path="/" element={<PrivateRoute component={<AdminLayout />} authenticated={token} />}>
         <Route path="setting/file" element={<FileList />} />
         <Route path="question/list" element={<QuestionCheck />} />
+        <Route path="generate/question" element={<GenerateQuestion />} />
       </Route>
     </Routes>
   );

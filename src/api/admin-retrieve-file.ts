@@ -7,7 +7,7 @@ interface AdminRetrieveFileProps {
 
 export async function adminRetrieveFile({ type, category }: AdminRetrieveFileProps) {
   try {
-    const response = await llm_axiosInstance.get('/retrieve_documents_by_type_and_category', {
+    const response = await llm_axiosInstance.get('/retrieve_documents', {
       params: {
         type,
         category,

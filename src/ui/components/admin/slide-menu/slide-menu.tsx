@@ -10,11 +10,10 @@ export default function SlideMenu(props: MenuProps) {
     return [
       { key: '/admin/question/list', label: '질문 목록' },
       { type: 'divider' },
-      { key: '/admin/setting/preset', label: '질문 프리셋 변경' },
-      { type: 'divider' },
-      { key: '/admin/setting/category', label: '카테고리 변경' },
       { type: 'divider' },
       { key: '/admin/setting/file', label: '파일 확인' },
+      { type: 'divider' },
+      { key: '/admin/generate/question', label: '질문답변 생성' },
     ];
   }, []);
 

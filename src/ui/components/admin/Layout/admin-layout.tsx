@@ -24,8 +24,9 @@ const AdminLayout: React.FC = () => {
 
   const breadcrumpItem1 = pathname.split('/')[1];
   const breadcrumpItem2 = pathname.split('/')[2];
+  const breadcrumpItem3 = pathname.split('/')[3];
 
-  const breadcrumpItems = [{ title: breadcrumpItem1 }, { title: breadcrumpItem2 }];
+  const breadcrumpItems = [{ title: breadcrumpItem1 }, { title: breadcrumpItem2 }, { title: breadcrumpItem3 }];
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider style={{ background: '#002968' }}>
