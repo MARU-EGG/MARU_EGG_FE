@@ -39,6 +39,7 @@ const FileList: React.FC = () => {
       console.error('Upload failed', error);
     }
     setUploading(false);
+    setFileList([]);
   };
 
   useEffect(() => {
@@ -46,17 +47,22 @@ const FileList: React.FC = () => {
       setLoading(true);
       try {
         const response = await adminRetrieveFile({ type, category });
-        const formattedData = response.documents.reduce((acc: DataListType[], item: any) => {
-          const exists = acc.find((data) => data.title === item.title);
-          if (!exists) {
-            acc.push({
-              title: item.title,
-              createdAt: item.created_at,
-            });
-          }
-          return acc;
-        }, []);
-        console.log(dataList);
+        const formattedData: DataListType[] = [];
+
+        Object.keys(response.documents).forEach((key) => {
+          const documentsArray = response.documents[key];
+
+          documentsArray.forEach((item: any) => {
+            const exists = formattedData.find((data) => data.title === item.title);
+            if (!exists) {
+              formattedData.push({
+                title: item.title,
+                createdAt: item.created_at,
+              });
+            }
+          });
+        });
+
         setDataList(formattedData);
       } catch (error) {
         console.error('다운로드 에러', error);
