@@ -1,11 +1,12 @@
-import { Button, Divider, List, Select } from 'antd';
+import { Button, Divider, Select, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
 import Uploader from '../../components/admin/Uploader';
 import { useHtmlFileSubmit } from '../../../hooks/use-html-file-submit.hooks';
-import { adminRetrieveFile } from '../../../api/admin-retrieve-file';
+import { adminDeleteFile, adminRetrieveFile } from '../../../api/admin-llm-file';
 
 interface DataListType {
+  key: string;
   title: string;
   createdAt: string;
 }
@@ -42,6 +43,15 @@ const FileList: React.FC = () => {
     setFileList([]);
   };
 
+  const handleDelete = async (record: DataListType) => {
+    try {
+      await adminDeleteFile({ type, category });
+      setDataList((prevData) => prevData.filter((item) => item.key !== record.key));
+    } catch (error) {
+      console.error('삭제 실패', error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -52,10 +62,11 @@ const FileList: React.FC = () => {
         Object.keys(response.documents).forEach((key) => {
           const documentsArray = response.documents[key];
 
-          documentsArray.forEach((item: any) => {
+          documentsArray.forEach((item: any, index: number) => {
             const exists = formattedData.find((data) => data.title === item.title);
             if (!exists) {
               formattedData.push({
+                key: `${key}-${index}`,
                 title: item.title,
                 createdAt: item.created_at,
               });
@@ -73,6 +84,28 @@ const FileList: React.FC = () => {
 
     fetchData();
   }, [type, category]);
+
+  const columns = [
+    {
+      title: '파일 이름',
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: '업로드 날짜',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+    },
+    {
+      title: '삭제',
+      key: 'action',
+      render: (text: any, record: DataListType) => (
+        <Button type="link" danger onClick={() => handleDelete(record)}>
+          삭제
+        </Button>
+      ),
+    },
+  ];
 
   return (
     <div className="w-full">
@@ -122,15 +155,7 @@ const FileList: React.FC = () => {
 
       <Divider orientation="left">업로드된 파일 확인하기</Divider>
       <div className="mx-8">
-        <List
-          itemLayout="horizontal"
-          dataSource={dataList}
-          renderItem={(item, index) => (
-            <List.Item key={index}>
-              <List.Item.Meta title={item.title} description={item.createdAt} />
-            </List.Item>
-          )}
-        />
+        <Table columns={columns} dataSource={dataList} loading={loading} />
       </div>
     </div>
   );
