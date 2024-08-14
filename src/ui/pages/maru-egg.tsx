@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../components/molecule/user/header/header';
+import Header from '../components/molecule/header/header';
 import useTypeStore from '../../store/type-store';
 import ChatCard from '../components/atom/chat-card/chat-card';
-import ChatForm from '../components/molecule/user/chat-form/chat-form';
+import ChatForm from '../components/molecule/chat-form/chat-form';
 import useChatStore from '../../store/chat-store';
 import PresetButton from '../components/atom/preset/preset-button';
 
@@ -17,10 +17,10 @@ const MaruEgg: React.FC = () => {
   };
 
   return (
-    <div className="h-screen min-w-[360px] bg-background-default">
+    <div className="h-lvh bg-background-default">
       <Header type={type} />
 
-      <div className="w-full px-4 pb-24 pt-16">
+      <div className="max-h-screen-minus-header w-full overflow-y-auto px-4 pb-24 pt-16">
         <ChatCard
           content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
             궁금하신 내용 안내 도와드리겠습니다.  

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ReactComponent as RefreshIcon } from '../../../../../assets/Refresh.svg';
-import { ReactComponent as MenuIcon } from '../../../../../assets/Menu.svg';
-import maruEgg from '../../../../../assets/maru-egg.png';
-import IconButton from '../../../atom/icon/icon-button';
+import { ReactComponent as RefreshIcon } from '../../../../assets/Refresh.svg';
+import { ReactComponent as MenuIcon } from '../../../../assets/Menu.svg';
+import maruEgg from '../../../../assets/maru-egg.png';
+import IconButton from '../../atom/icon/icon-button';
+import MenuDrawer from '../menu-drawer/menu-drawer';
 
 interface HeaderProps {
   type: null | 'SUSI' | 'PYEONIP' | 'JEONGSI';
@@ -19,6 +19,10 @@ const Header = ({ type }: HeaderProps) => {
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleCloseDrawer = () => {
+    setMenuOpen(false);
   };
 
   return (
@@ -45,6 +49,7 @@ const Header = ({ type }: HeaderProps) => {
       <IconButton onClick={handleMenuClick}>
         <MenuIcon />
       </IconButton>
+      <MenuDrawer open={menuOpen} onClose={handleCloseDrawer} />
     </div>
   );
 };

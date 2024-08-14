@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import TextInput from '../../../atom/text-input/text-input';
-import IconButton from '../../../atom/icon/icon-button';
-import { ReactComponent as SendIcon } from '../../../../../assets/Send.svg';
-import { postQuestion } from '../../../../../api/post-question';
-import { cn } from '../../../../../utils/style';
-import useChatStore from '../../../../../store/chat-store';
-import { useAutoComplete } from '../../../../../hooks/use-auto-complete.hooks';
-import AutoCompleteList from '../../../atom/auto-complete/auto-complete';
+import TextInput from '../../atom/text-input/text-input';
+import IconButton from '../../atom/icon/icon-button';
+import { ReactComponent as SendIcon } from '../../../../assets/Send.svg';
+import { postQuestion } from '../../../../api/post-question';
+import { cn } from '../../../../utils/style';
+import useChatStore from '../../../../store/chat-store';
+import { useAutoComplete } from '../../../../hooks/use-auto-complete.hooks';
+import AutoCompleteList from '../../atom/auto-complete/auto-complete';
 
 interface ChatFormProps {
   type: 'SUSI' | 'PYEONIP' | 'JEONGSI';

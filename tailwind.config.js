@@ -23,6 +23,10 @@ module.exports = {
         body2: ['16px', { lineHeight: '24px', fontWeight: '500' }],
         body3: ['14px', { lineHeight: '20px', fontWeight: '500' }],
         title: ['24px', { lineHeight: '32px', fontWeight: '700' }],
+        mobile_title: ['16px', { lineHeight: '24px', fontWeight: '600' }],
+      },
+      maxHeight: {
+        'screen-minus-header': 'calc(100vh - 1.75rem)',
       },
     },
   },
