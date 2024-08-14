@@ -20,6 +20,33 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
   const handleButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
     setSelectedButton(selectedType);
   };
+  const getUrls = () => {
+    switch (selectedButton) {
+      case 'SUSI':
+        return {
+          admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=10&mj=01',
+          admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=11&b=B_1_2&cate=%EC%88%98%EC%8B%9C',
+        };
+      case 'PYEONIP':
+        return {
+          admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=26&mj=04',
+          admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=27&b=B_1_2&cate=%ED%8E%B8%EC%9E%85%ED%95%99',
+        };
+      case 'JEONGSI':
+        return {
+          admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=16&mj=02',
+          admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=17&b=B_1_2&cate=%EC%A0%95%EC%8B%9C',
+        };
+      default:
+        return {
+          admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=10&mj=01',
+          admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=11&b=B_1_2&cate=%EC%88%98%EC%8B%9C',
+        };
+    }
+  };
+
+  const { admissionGuideUrl, admissionResultsUrl } = getUrls();
+
   return (
     <Drawer placement="bottom" closable={false} open={open} onClose={onClose} className="rounded-t-3xl" height={244}>
       <div className="flex">
@@ -40,13 +67,22 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
           </IconButton>
         </div>
       </div>
-      <div className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]">
+      <div
+        onClick={() => window.open('https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5', '_blank', 'noopener, noreferrer')}
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+      >
         FAQ 바로가기
       </div>
-      <div className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]">
+      <div
+        onClick={() => window.open(admissionResultsUrl, '_blank', 'noopener, noreferrer')}
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+      >
         입시결과 바로가기
       </div>
-      <div className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]">
+      <div
+        onClick={() => window.open(admissionGuideUrl, '_blank', 'noopener, noreferrer')}
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+      >
         모집요강 바로가기
       </div>
       <div className="p-2 font-pretendard text-xs">
