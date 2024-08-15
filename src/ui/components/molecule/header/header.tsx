@@ -26,13 +26,13 @@ const Header = ({ type }: HeaderProps) => {
   };
 
   return (
-    <div className="fixed flex w-full items-center justify-between bg-white px-3 py-2">
+    <div className="absolute z-10 flex w-full items-center justify-between rounded-tl-2xl rounded-tr-2xl bg-white px-4 py-4">
       <IconButton onClick={handleRefreshClick}>
         <RefreshIcon />
       </IconButton>
       <div className="flex items-center">
-        <img className="mr-2 h-8 w-8" src={maruEgg} alt="마루에그 캐릭터" />
-        <div className="mr-8 text-title text-primary-blue">명지대학교 입학처 챗봇</div>
+        {/* <img className="mr-2 h-8 w-8" src={maruEgg} alt="마루에그 캐릭터" /> */}
+        <div className="mr-8 font-pretendard text-lg font-semibold text-primary-blue">명지대학교 입학처 챗봇</div>
         {type && (
           <ul role="list" className="flex list-disc items-center marker:text-primary-blue">
             <li className="pl-0">

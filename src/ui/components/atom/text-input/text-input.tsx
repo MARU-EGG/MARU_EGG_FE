@@ -16,7 +16,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(function Te
       ref={ref}
       type="text"
       className={cn(
-        `w-full rounded-2xl bg-transparent px-5 py-2 text-body3`,
+        `w-full rounded-2xl bg-transparent px-4 py-2 text-base`,
         `placeholder:text-[#72777A] focus:outline-none`,
       )}
       value={value}

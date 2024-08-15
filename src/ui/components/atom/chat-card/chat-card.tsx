@@ -10,7 +10,7 @@ interface ChatCardProps {
 const ChatCard = ({ content, role }: ChatCardProps) => {
   return (
     <div>
-      {role === 'user' ? null : <img src={maru} className="mb-2 h-8 w-8" />}
+      {role === 'user' ? null : <img src={maru} className="mt-2 h-8 w-8" />}
       <div
         className={cn('flex h-auto flex-col-reverse py-3', {
           'items-end justify-end': role === 'user',
@@ -23,7 +23,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
             'justify-start text-left': role !== 'user',
           })}
         >
-          <div className="px-4 py-3 text-body1">
+          <div className="font-pretendard text-sm font-normal">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </div>
         </div>
