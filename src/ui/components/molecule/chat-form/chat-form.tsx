@@ -51,10 +51,15 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
   return (
     <>
       {autoOpen ? <AutoCompleteList results={results} onSelect={handleSelect} /> : null}
-      <form className={cn('flex flex-nowrap rounded-2xl px-4 py-2', 'bg-background-default')} onSubmit={handleSubmit}>
+      <form
+        className={cn('flex flex-nowrap rounded-2xl border py-2 pr-1', 'bg-background-default')}
+        onSubmit={handleSubmit}
+      >
         <TextInput value={content} onValueChange={handleChange} placeholder="메시지를 입력해주세요." />
         <IconButton type="submit" disabled={disabled}>
-          <SendIcon />
+          <div className="pr-2">
+            <SendIcon />
+          </div>
         </IconButton>
       </form>
     </>

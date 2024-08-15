@@ -49,9 +49,9 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
 
   return (
     <Drawer placement="bottom" closable={false} open={open} onClose={onClose} className="rounded-t-3xl" height={244}>
-      <div className="flex">
-        <div className="flex w-full justify-between py-2">
-          <div>
+      <div className="flex flex-col space-y-4">
+        <div className="flex w-full justify-between">
+          <div className="mb-2 space-x-2">
             <PresetButton onClick={() => handleButtonClick('SUSI')} isSelected={selectedButton === 'SUSI'}>
               수시
             </PresetButton>
@@ -69,27 +69,28 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
       </div>
       <div
         onClick={() => window.open('https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5', '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         FAQ 바로가기
       </div>
       <div
         onClick={() => window.open(admissionResultsUrl, '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         입시결과 바로가기
       </div>
       <div
         onClick={() => window.open(admissionGuideUrl, '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         모집요강 바로가기
       </div>
-      <div className="p-2 font-pretendard text-xs">
-        학생부교과, 실기/실적위주, 기타 문의------입학관리팀 : 02)300-1799, 1800 <br />
+      <div className="p-2 font-pretendard text-xs text-[#767676]">
+        학생부교과, 실기/실적위주, 기타 문의------입학관리팀 : 02)300-1799, 1800
+      </div>
+      <div className="mt-[-14px] p-2 font-pretendard text-xs text-[#767676]">
         학생부종합 문의 ------------------------인재발굴팀 : 02)300-1797, 1844
       </div>
-      <div className="p-2 font-pretendard text-xs"></div>
     </Drawer>
   );
 };
