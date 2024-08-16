@@ -38,6 +38,7 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
       useChatStore.getState().addMessage({ content: '답변을 생성중입니다...', role: 'system' });
       useChatStore.getState().setLoading(true);
       setContent('');
+      setAutoOpen(false);
       const response = await postQuestion(category, type, content);
       useChatStore.getState().updateLastMessage(response.answer.content);
       useChatStore.getState().setLoading(false);
