@@ -17,7 +17,7 @@ const MaruEgg: React.FC = () => {
   };
 
   return (
-    <div className="flex h-lvh items-center justify-center bg-gray-100">
+    <div className="flex h-svh items-center justify-center bg-gray-100">
       <div className="relative flex h-[780px] w-[390px] rounded-2xl border border-gray-200 bg-background-default shadow-2xl">
         <Header type={type} />
         <div className="max-h-screen-minus-header w-full overflow-y-auto px-4 pb-24 pt-16">
