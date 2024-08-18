@@ -48,7 +48,15 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
   const { admissionGuideUrl, admissionResultsUrl } = getUrls();
 
   return (
-    <Drawer placement="bottom" closable={false} open={open} onClose={onClose} className="rounded-t-3xl" height={244}>
+    <Drawer
+      placement="bottom"
+      closable={false}
+      open={open}
+      onClose={onClose}
+      height="32vh"
+      rootClassName="absolute mx-auto my-auto max-w-[390px] max-h-[780px] rounded-t-3xl"
+      rootStyle={{ width: '100%', borderRadius: '1rem', overflow: 'hidden' }}
+    >
       <div className="flex flex-col space-y-4">
         <div className="flex w-full justify-between">
           <div className="mb-2 space-x-2">
@@ -85,11 +93,15 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
       >
         모집요강 바로가기
       </div>
-      <div className="p-2 font-pretendard text-xs text-[#767676]">
-        학생부교과, 실기/실적위주, 기타 문의------입학관리팀 : 02)300-1799, 1800
-      </div>
-      <div className="mt-[-14px] p-2 font-pretendard text-xs text-[#767676]">
-        학생부종합 문의 ------------------------인재발굴팀 : 02)300-1797, 1844
+      <div className="mt-2 space-y-2">
+        <div className="flex justify-between px-2 font-pretendard text-xs text-[#767676]">
+          <p className="font-medium">학생부교과, 실기/실적위주, 기타</p>
+          <p>입학관리팀: 02)300-1799,1800</p>
+        </div>
+        <div className="flex justify-between px-2 font-pretendard text-xs text-[#767676]">
+          <p className="font-medium">학생부종합 문의</p>
+          <p>인재발굴팀: 02)300-1797,1844</p>
+        </div>
       </div>
     </Drawer>
   );
