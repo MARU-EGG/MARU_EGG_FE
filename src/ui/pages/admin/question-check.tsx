@@ -1,8 +1,10 @@
-import { Divider, Select, Table, TableProps, Tag } from 'antd';
+import { Divider, Select, Table, TableProps, Tag, AutoComplete, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { adminQuestionCheck } from '../../../api/admin-question-check';
 import EditModal from '../../components/admin/modal/edit-modal';
 import useCheckQuestionAnswerStore, { QuestionAnswerState } from '../../../store/admin/check-question-answer-store';
+import { searchAutoComplete } from '../../../api/search-auto-complete';
+import { adminSearchById } from '../../../api/admin-search-by-id';
 
 const columns: TableProps<QuestionAnswerState>['columns'] = [
   {
@@ -29,6 +31,10 @@ const QuestionCheck = () => {
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [searchText, setSearchText] = useState('');
+  const [autoCompleteOptions, setAutoCompleteOptions] = useState<{ value: string; id: number }[]>([]);
+  const [selectedOptionId, setSelectedOptionId] = useState<number | null>(null);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState<QuestionAnswerState | null>(null);
 
@@ -43,6 +49,40 @@ const QuestionCheck = () => {
   const handleRowClick = (record: QuestionAnswerState) => {
     setSelectedQuestion(record);
     setModalOpen(true);
+  };
+
+  const handleSearchChange = async (value: string) => {
+    setSearchText(value);
+
+    if (value) {
+      try {
+        const autoCompleteResults = await searchAutoComplete(value);
+        const options = autoCompleteResults.data.map((item: any) => ({ value: item.content, id: item.id }));
+        setAutoCompleteOptions(options);
+      } catch (error) {
+        console.error('Error fetching autocomplete data:', error);
+      }
+    } else {
+      setAutoCompleteOptions([]);
+    }
+  };
+
+  const handleSearchSelect = (value: string, option: any) => {
+    setSearchText(value);
+    setSelectedOptionId(option.id);
+  };
+
+  const handleSearch = async () => {
+    if (selectedOptionId !== null) {
+      try {
+        const response = await adminSearchById(selectedOptionId);
+        updateQuestionData(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    } else {
+      console.warn('No search option selected');
+    }
   };
 
   useEffect(() => {
@@ -64,6 +104,20 @@ const QuestionCheck = () => {
   return (
     <div className="w-full">
       <Divider orientation="left">챗봇 질문 내용-답변 확인</Divider>
+
+      <div className="mx-8 mb-3 flex items-center">
+        <AutoComplete
+          style={{ width: 300 }}
+          options={autoCompleteOptions}
+          onSearch={handleSearchChange}
+          onSelect={handleSearchSelect}
+          value={searchText}
+          onChange={setSearchText}
+        >
+          <Input.Search placeholder="질문 검색" enterButton onSearch={handleSearch} />
+        </AutoComplete>
+      </div>
+
       <div className="mx-8">
         전형선택
         <Select
