@@ -1,6 +1,6 @@
 import { server_axiosInstance } from '../utils/axios';
 
-export async function adminSearchById(id: number) {
+export async function SearchById(id: number) {
   try {
     const response = await server_axiosInstance.get('/api/question', {
       params: {

@@ -4,7 +4,7 @@ import { adminQuestionCheck } from '../../../api/admin-question-check';
 import EditModal from '../../components/admin/modal/edit-modal';
 import useCheckQuestionAnswerStore, { QuestionAnswerState } from '../../../store/admin/check-question-answer-store';
 import { searchAutoComplete } from '../../../api/search-auto-complete';
-import { adminSearchById } from '../../../api/admin-search-by-id';
+import { SearchById } from '../../../api/admin-search-by-id';
 
 const columns: TableProps<QuestionAnswerState>['columns'] = [
   {
@@ -75,7 +75,7 @@ const QuestionCheck = () => {
   const handleSearch = async () => {
     if (selectedOptionId !== null) {
       try {
-        const response = await adminSearchById(selectedOptionId);
+        const response = await SearchById(selectedOptionId);
         updateQuestionData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
