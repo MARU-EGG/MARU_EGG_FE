@@ -7,6 +7,7 @@ import { cn } from '../../../../utils/style';
 import useChatStore from '../../../../store/chat-store';
 import { useAutoComplete } from '../../../../hooks/use-auto-complete.hooks';
 import AutoCompleteList from '../../atom/auto-complete/auto-complete';
+import { SearchById } from '../../../../api/admin-search-by-id';
 
 interface ChatFormProps {
   type: 'SUSI' | 'PYEONIP' | 'JEONGSI';
@@ -15,6 +16,7 @@ interface ChatFormProps {
 
 const ChatForm = ({ type, category }: ChatFormProps) => {
   const [content, setContent] = useState<string>('');
+  const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [disabled, setDisabled] = useState(true);
   const [autoOpen, setAutoOpen] = useState(false);
   const { results } = useAutoComplete({ content });
@@ -25,7 +27,8 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
     setAutoOpen(true);
   };
 
-  const handleSelect = (value: string) => {
+  const handleSelect = (value: string, id: number) => {
+    setSelectedId(id);
     setContent(value);
     setDisabled(value.trim() === '');
     setAutoOpen(false);
@@ -39,10 +42,16 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
       useChatStore.getState().setLoading(true);
       setContent('');
       setAutoOpen(false);
-      const response = await postQuestion(category, type, content);
-      useChatStore.getState().updateLastMessage(response.answer.content);
-      useChatStore.getState().setLoading(false);
-      setDisabled(true);
+      if (selectedId === undefined) {
+        const response = await postQuestion(category, type, content);
+        useChatStore.getState().updateLastMessage(response.answer.content);
+        useChatStore.getState().setLoading(false);
+        setDisabled(true);
+      } else {
+        const response = await SearchById(selectedId);
+        useChatStore.getState().updateLastMessage(response.answer.content);
+        useChatStore.getState().setLoading(false);
+      }
     } catch (error) {
       useChatStore.getState().setLoading(false);
       useChatStore.getState().updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
