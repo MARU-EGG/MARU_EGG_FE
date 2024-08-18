@@ -3,7 +3,7 @@ import { AutoCompleteResult } from '../../../../hooks/use-auto-complete.hooks';
 
 interface AutoCompleteListProps {
   results: AutoCompleteResult[];
-  onSelect: (content: string) => void;
+  onSelect: (content: string, id: number) => void;
 }
 
 const AutoCompleteList: React.FC<AutoCompleteListProps> = ({ results, onSelect }) => {
@@ -18,7 +18,7 @@ const AutoCompleteList: React.FC<AutoCompleteListProps> = ({ results, onSelect }
           <li
             key={index}
             className="cursor-pointer px-[16px] py-2 font-pretendard font-normal text-[#3A3A3A] hover:rounded-md hover:bg-[#F7F7F7]"
-            onClick={() => onSelect(result.content)}
+            onClick={() => onSelect(result.content, result.id)}
           >
             {result.content}
           </li>

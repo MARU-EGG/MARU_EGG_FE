@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AdminEditAnswer } from '../../../../api/admin-edit-answer';
 import { AdminCheckQuestionAnswer } from '../../../../api/admin-check-question-answer';
 import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
@@ -14,7 +14,6 @@ interface CustomModalProps {
 const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   const { questionData, updateCheck, updateAnswer } = useCheckQuestionAnswerStore();
   const question = questionData.find((question) => question.id === questionId);
-
   if (!question) {
     return null;
   }
@@ -44,6 +43,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
           await AdminCheckQuestionAnswer({ questionId, check: true });
           updateCheck(questionId, true);
         }
+        handleClose();
       });
     } catch (err) {
       setEditStatus(false);
@@ -61,6 +61,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
 
   const handleClose = () => {
     setOpen(false);
+    setEditStatus(false);
   };
 
   const enableEditMode = () => {
@@ -74,7 +75,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   return (
     <Modal
       open={open}
-      title={modalTitle}
+      title={`${modalTitle} - 질문 확인 상태: ${isChecked}`}
       onCancel={handleClose}
       footer={[
         <Button key="close" onClick={handleClose}>
