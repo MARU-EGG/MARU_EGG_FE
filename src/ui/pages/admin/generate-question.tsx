@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Divider, Input, Select } from 'antd';
+import { Button, Divider, Input, Select, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { AdminGenerateQuestion } from '../../../api/admin-generate-question';
-
 const GenerateQuestion = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const info = () => {
+    messageApi.info('질문과 답변이 저장되었습니다.');
+  };
+
   const [type, setType] = useState('SUSI');
   const [category, setCategory] = useState('ADMISSION_GUIDELINE');
   const [question, setQuestion] = useState('');
@@ -23,8 +28,20 @@ const GenerateQuestion = () => {
   const handleAnswerInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAnswer(e.target.value);
   };
+
+  const handleSubmit = async () => {
+    try {
+      await AdminGenerateQuestion({ category, type, questionContent: question, answerContent: answer });
+      setQuestion('');
+      setAnswer('');
+      messageApi.info('질문과 답변이 저장되었습니다.');
+    } catch (error) {
+      messageApi.error('질문-답변 내용이 저장되지 않았습니다. 재로그인 후 다시 시도해주세요.');
+    }
+  };
   return (
     <div className="w-full">
+      {contextHolder}
       <Divider orientation="left">챗봇 질문-답변 생성하기</Divider>
       <div className="mx-8 my-2">
         전형선택
@@ -54,15 +71,14 @@ const GenerateQuestion = () => {
         />
       </div>
       <Divider orientation="left">질문 내용</Divider>
-      <Input onChange={handleQuestionInputChange} placeholder="질문 내용을 적어주세요 (ex. 수시 모집요강 요약해줘)" />
+      <Input
+        value={question}
+        onChange={handleQuestionInputChange}
+        placeholder="질문 내용을 적어주세요 (ex. 수시 모집요강 요약해줘)"
+      />
       <Divider orientation="left">답변 내용</Divider>
-      <div className="mb-5 text-xl">볼드체: **볼드단어**</div>
-      <TextArea rows={10} onChange={handleAnswerInputChange} placeholder="답변 내용을 적어주세요" />
-      <Button
-        className="my-3"
-        type="primary"
-        onClick={() => AdminGenerateQuestion({ category, type, questionContent: question, answerContent: answer })}
-      >
+      <TextArea value={answer} rows={10} onChange={handleAnswerInputChange} placeholder="답변 내용을 적어주세요" />
+      <Button className="my-3" type="primary" onClick={handleSubmit}>
         답변 생성하기
       </Button>
     </div>
