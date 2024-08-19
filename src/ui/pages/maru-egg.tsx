@@ -78,12 +78,6 @@ const MaruEgg: React.FC = () => {
                 >
                   면접등 기출문제
                 </PresetButton>
-                <PresetButton
-                  onClick={() => handleCategoryButtonClick('INTERVIEW_PRACTICAL_TEST')}
-                  isSelected={selectedCategoryButton === 'INTERVIEW_PRACTICAL_TEST'}
-                >
-                  실기관련
-                </PresetButton>
               </div>
             </>
           )}

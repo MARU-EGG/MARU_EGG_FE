@@ -51,6 +51,7 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
         const response = await SearchById(selectedId);
         useChatStore.getState().updateLastMessage(response.answer.content);
         useChatStore.getState().setLoading(false);
+        setSelectedId(undefined);
       }
     } catch (error) {
       useChatStore.getState().setLoading(false);
