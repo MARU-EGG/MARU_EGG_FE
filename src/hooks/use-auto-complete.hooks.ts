@@ -26,7 +26,7 @@ export const useAutoComplete = ({ content, delay = 1000 }: UseAutoCompleteProps)
       setError(null);
 
       try {
-        const response = await searchAutoComplete(debouncedContent, type, category);
+        const response = await searchAutoComplete(debouncedContent, category, type);
         setResults(response.data);
       } catch (err) {
         setError('자동완성 api 호출 실패');
