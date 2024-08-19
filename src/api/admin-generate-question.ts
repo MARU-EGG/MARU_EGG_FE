@@ -25,7 +25,7 @@ export async function AdminGenerateQuestion({
     },
   };
   try {
-    const response = await server_axiosInstance.post('/api/questions/new', JSON.stringify(data), {
+    const response = await server_axiosInstance.post('/api/admin/questions/new', JSON.stringify(data), {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
         'Content-Type': 'application/json',
