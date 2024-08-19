@@ -17,7 +17,7 @@ interface ChatFormProps {
 const ChatForm = ({ type, category }: ChatFormProps) => {
   const [content, setContent] = useState<string>('');
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [autoOpen, setAutoOpen] = useState(false);
   const { results } = useAutoComplete({ content });
 
@@ -42,16 +42,18 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
       useChatStore.getState().setLoading(true);
       setContent('');
       setAutoOpen(false);
+      setDisabled(true);
       if (selectedId === undefined) {
         const response = await postQuestion(category, type, content);
         useChatStore.getState().updateLastMessage(response.answer.content);
         useChatStore.getState().setLoading(false);
-        setDisabled(true);
+        setDisabled(false);
       } else {
         const response = await SearchById(selectedId);
         useChatStore.getState().updateLastMessage(response.answer.content);
         useChatStore.getState().setLoading(false);
         setSelectedId(undefined);
+        setDisabled(false);
       }
     } catch (error) {
       useChatStore.getState().setLoading(false);
@@ -66,7 +68,12 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
         className={cn('flex flex-nowrap rounded-2xl border py-2 pr-1', 'bg-background-default')}
         onSubmit={handleSubmit}
       >
-        <TextInput value={content} onValueChange={handleChange} placeholder="메시지를 입력해주세요." />
+        <TextInput
+          value={content}
+          onValueChange={handleChange}
+          placeholder="메시지를 입력해주세요."
+          disabled={disabled}
+        />
         <IconButton type="submit" disabled={disabled}>
           <div className="pr-2">
             <SendIcon />
