@@ -61,7 +61,7 @@ const MaruEgg: React.FC = () => {
           {type !== undefined && (
             <>
               <ChatCard content={`알고싶은 내용을 선택해주세요`} role="system" />
-              <div className="flex flex-wrap space-x-2 space-y-1">
+              <div className="flex w-2/5 flex-wrap space-y-2">
                 <PresetButton
                   onClick={() => handleCategoryButtonClick('ADMISSION_GUIDELINE')}
                   isSelected={selectedCategoryButton === 'ADMISSION_GUIDELINE'}
