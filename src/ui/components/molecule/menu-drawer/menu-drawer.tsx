@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Drawer } from 'antd';
 import PresetButton from '../../atom/preset/preset-button';
-import useTypeStore from '../../../../store/type-store';
+import useTypeStore from '../../../../store/type-category-store';
 import { ReactComponent as XIcon } from '../../../../assets/X.svg';
 import IconButton from '../../atom/icon/icon-button';
 
