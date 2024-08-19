@@ -1,21 +1,30 @@
 import React from 'react';
 import Header from '../components/molecule/header/header';
-import useTypeStore from '../../store/type-store';
+import useTypeStore from '../../store/type-category-store';
 import ChatCard from '../components/atom/chat-card/chat-card';
 import ChatForm from '../components/molecule/chat-form/chat-form';
 import useChatStore from '../../store/chat-store';
 import PresetButton from '../components/atom/preset/preset-button';
 
 const MaruEgg: React.FC = () => {
-  const { setSelectedType, type } = useTypeStore();
+  const { setSelectedType, type, setSelectedCategory, category } = useTypeStore();
   const { messages } = useChatStore();
-  const [selectedButton, setSelectedButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | null>(null);
+  const [selectedTypeButton, setSelectedTypeButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | null>(null);
+  const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<
+    null | 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST'
+  >(null);
 
-  const handleButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
+  const handleTypeButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
     setSelectedType(selectedType);
-    setSelectedButton(selectedType);
+    setSelectedTypeButton(selectedType);
   };
 
+  const handleCategoryButtonClick = (
+    selectedCategory: 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST',
+  ) => {
+    setSelectedCategory(selectedCategory);
+    setSelectedCategoryButton(selectedCategory);
+  };
   return (
     <div className="flex h-svh items-center justify-center bg-gray-100">
       <div className="relative flex h-[780px] w-[390px] rounded-2xl border border-gray-200 bg-background-default shadow-2xl">
@@ -28,13 +37,19 @@ const MaruEgg: React.FC = () => {
             role="system"
           />
           <div className="flex space-x-2">
-            <PresetButton onClick={() => handleButtonClick('SUSI')} isSelected={selectedButton === 'SUSI'}>
+            <PresetButton onClick={() => handleTypeButtonClick('SUSI')} isSelected={selectedTypeButton === 'SUSI'}>
               수시
             </PresetButton>
-            <PresetButton onClick={() => handleButtonClick('PYEONIP')} isSelected={selectedButton === 'PYEONIP'}>
+            <PresetButton
+              onClick={() => handleTypeButtonClick('PYEONIP')}
+              isSelected={selectedTypeButton === 'PYEONIP'}
+            >
               편입
             </PresetButton>
-            <PresetButton onClick={() => handleButtonClick('JEONGSI')} isSelected={selectedButton === 'JEONGSI'}>
+            <PresetButton
+              onClick={() => handleTypeButtonClick('JEONGSI')}
+              isSelected={selectedTypeButton === 'JEONGSI'}
+            >
               정시
             </PresetButton>
           </div>
@@ -42,6 +57,52 @@ const MaruEgg: React.FC = () => {
             <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
           )}
           {type !== null && (
+            <>
+              <ChatCard content={`알고싶은 내용을 선택해주세요`} role="system" />
+              <div className="flex flex-wrap space-x-2 space-y-1">
+                <PresetButton
+                  onClick={() => handleCategoryButtonClick('ADMISSION_GUIDELINE')}
+                  isSelected={selectedCategoryButton === 'ADMISSION_GUIDELINE'}
+                >
+                  모집관련내용
+                </PresetButton>
+                <PresetButton
+                  onClick={() => handleCategoryButtonClick('PASSING_RESULT')}
+                  isSelected={selectedCategoryButton === 'PASSING_RESULT'}
+                >
+                  전년도 입시결과
+                </PresetButton>
+                <PresetButton
+                  onClick={() => handleCategoryButtonClick('PAST_QUESTIONS')}
+                  isSelected={selectedCategoryButton === 'PAST_QUESTIONS'}
+                >
+                  면접등 기출문제
+                </PresetButton>
+                <PresetButton
+                  onClick={() => handleCategoryButtonClick('INTERVIEW_PRACTICAL_TEST')}
+                  isSelected={selectedCategoryButton === 'INTERVIEW_PRACTICAL_TEST'}
+                >
+                  실기관련
+                </PresetButton>
+              </div>
+            </>
+          )}
+
+          {category !== null && (
+            <ChatCard
+              role="user"
+              content={
+                category === 'ADMISSION_GUIDELINE'
+                  ? '모집관련내용'
+                  : category === 'PASSING_RESULT'
+                    ? '전년도 입시결과'
+                    : category === 'PAST_QUESTIONS'
+                      ? '면접 등 기출문제'
+                      : '실기관련'
+              }
+            />
+          )}
+          {type !== null && category !== null && (
             <ChatCard
               role="system"
               content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
@@ -53,9 +114,9 @@ const MaruEgg: React.FC = () => {
             return <ChatCard key={index} content={msg.content} role={msg.role} />;
           })}
         </div>
-        {type !== null && (
+        {type !== null && category !== null && (
           <div className="absolute bottom-0 w-full rounded-bl-2xl rounded-br-2xl bg-white px-3 py-3">
-            <ChatForm type={type} />
+            <ChatForm type={type} category={category} />
           </div>
         )}
       </div>
