@@ -13,7 +13,7 @@ export interface AutoCompleteResult {
   id: number;
 }
 
-export const useAutoComplete = ({ content, delay = 300 }: UseAutoCompleteProps) => {
+export const useAutoComplete = ({ content, delay = 1000 }: UseAutoCompleteProps) => {
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { type, category } = useTypeStore();
