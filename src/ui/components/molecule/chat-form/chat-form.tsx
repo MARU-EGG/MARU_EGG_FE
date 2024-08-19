@@ -23,8 +23,8 @@ const ChatForm = ({ type, category }: ChatFormProps) => {
 
   const handleChange = (value: string) => {
     setContent(value);
-    setDisabled(value.trim() === '');
     setAutoOpen(true);
+    setSelectedId(undefined);
   };
 
   const handleSelect = (value: string, id: number) => {
