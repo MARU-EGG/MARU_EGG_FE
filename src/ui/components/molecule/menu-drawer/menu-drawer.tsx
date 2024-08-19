@@ -11,7 +11,7 @@ interface MenuDrawerProps {
 }
 
 const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
-  const [selectedButton, setSelectedButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | null>(null);
+  const [selectedButton, setSelectedButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | undefined>(undefined);
   const { type } = useTypeStore();
 
   useEffect(() => {

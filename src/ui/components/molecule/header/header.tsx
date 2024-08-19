@@ -6,7 +6,7 @@ import IconButton from '../../atom/icon/icon-button';
 import MenuDrawer from '../menu-drawer/menu-drawer';
 
 interface HeaderProps {
-  type: null | 'SUSI' | 'PYEONIP' | 'JEONGSI';
+  type: undefined | 'SUSI' | 'PYEONIP' | 'JEONGSI';
 }
 
 const Header = ({ type }: HeaderProps) => {

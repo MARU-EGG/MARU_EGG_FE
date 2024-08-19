@@ -9,10 +9,12 @@ import PresetButton from '../components/atom/preset/preset-button';
 const MaruEgg: React.FC = () => {
   const { setSelectedType, type, setSelectedCategory, category } = useTypeStore();
   const { messages } = useChatStore();
-  const [selectedTypeButton, setSelectedTypeButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | null>(null);
+  const [selectedTypeButton, setSelectedTypeButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | undefined>(
+    undefined,
+  );
   const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<
-    null | 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST'
-  >(null);
+    undefined | 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST'
+  >(undefined);
 
   const handleTypeButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
     setSelectedType(selectedType);
@@ -53,10 +55,10 @@ const MaruEgg: React.FC = () => {
               정시
             </PresetButton>
           </div>
-          {type !== null && (
+          {type !== undefined && (
             <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
           )}
-          {type !== null && (
+          {type !== undefined && (
             <>
               <ChatCard content={`알고싶은 내용을 선택해주세요`} role="system" />
               <div className="flex flex-wrap space-x-2 space-y-1">
@@ -78,11 +80,17 @@ const MaruEgg: React.FC = () => {
                 >
                   면접등 기출문제
                 </PresetButton>
+                <PresetButton
+                  onClick={() => handleCategoryButtonClick('INTERVIEW_PRACTICAL_TEST')}
+                  isSelected={selectedCategoryButton === 'INTERVIEW_PRACTICAL_TEST'}
+                >
+                  실기관련
+                </PresetButton>
               </div>
             </>
           )}
 
-          {category !== null && (
+          {category !== undefined && (
             <ChatCard
               role="user"
               content={
@@ -96,7 +104,7 @@ const MaruEgg: React.FC = () => {
               }
             />
           )}
-          {type !== null && category !== null && (
+          {type !== undefined && category !== undefined && (
             <ChatCard
               role="system"
               content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
@@ -108,7 +116,7 @@ const MaruEgg: React.FC = () => {
             return <ChatCard key={index} content={msg.content} role={msg.role} />;
           })}
         </div>
-        {type !== null && category !== null && (
+        {type !== undefined && category !== undefined && (
           <div className="absolute bottom-0 w-full rounded-bl-2xl rounded-br-2xl bg-white px-3 py-3">
             <ChatForm type={type} category={category} />
           </div>

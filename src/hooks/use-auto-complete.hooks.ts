@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useDebouce from './use-debounce.hooks';
 import { searchAutoComplete } from '../api/search-auto-complete';
+import useTypeStore from '../store/type-category-store';
 
 interface UseAutoCompleteProps {
   content: string;
@@ -15,6 +16,7 @@ export interface AutoCompleteResult {
 export const useAutoComplete = ({ content, delay = 300 }: UseAutoCompleteProps) => {
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { type, category } = useTypeStore();
 
   const debouncedContent = useDebouce(content, delay);
 
@@ -24,7 +26,7 @@ export const useAutoComplete = ({ content, delay = 300 }: UseAutoCompleteProps) 
       setError(null);
 
       try {
-        const response = await searchAutoComplete(debouncedContent);
+        const response = await searchAutoComplete(debouncedContent, type, category);
         setResults(response.data);
       } catch (err) {
         setError('자동완성 api 호출 실패');
