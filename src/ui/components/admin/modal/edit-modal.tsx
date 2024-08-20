@@ -17,11 +17,16 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   if (!question) {
     return null;
   }
-
   const { content: modalTitle, answer, isChecked } = question;
   const [editStatus, setEditStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState(answer.content);
+
+  useEffect(() => {
+    if (question) {
+      setContent(answer.content);
+    }
+  }, [questionId, open]);
 
   const executeWithLoading = async (action: () => Promise<void>) => {
     setLoading(true);
