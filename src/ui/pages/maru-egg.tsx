@@ -1,3 +1,4 @@
+// src/ui/pages/maru-egg.tsx
 import React from 'react';
 import Header from '../components/molecule/header/header';
 import useTypeStore from '../../store/type-category-store';
@@ -27,6 +28,7 @@ const MaruEgg: React.FC = () => {
     setSelectedCategory(selectedCategory);
     setSelectedCategoryButton(selectedCategory);
   };
+
   return (
     <div className="flex h-svh items-center justify-center bg-gray-100">
       <div className="relative flex h-[780px] w-[390px] rounded-2xl border border-gray-200 bg-background-default shadow-2xl">
@@ -110,7 +112,7 @@ const MaruEgg: React.FC = () => {
         </div>
         {type !== undefined && category !== undefined && (
           <div className="absolute bottom-0 w-full rounded-bl-2xl rounded-br-2xl bg-white px-3 py-3">
-            <ChatForm type={type} category={category} />
+            <ChatForm />
           </div>
         )}
       </div>
