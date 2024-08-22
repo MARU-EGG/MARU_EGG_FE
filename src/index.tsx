@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { CookiesProvider } from 'react-cookie';
+import { Analytics } from '@vercel/analytics/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <CookiesProvider>
     <App />
+    <Analytics />
   </CookiesProvider>,
 );
 
