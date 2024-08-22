@@ -2,27 +2,21 @@
 import React from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
 import PresetButton from '../../atom/preset/preset-button';
-import useTypeStore from '../../../../store/type-category-store';
+import useTypeStore, { TypeCategoryState } from '../../../../store/type-category-store';
 import useChatStore from '../../../../store/chat-store';
 
 const ChatSection: React.FC = () => {
   const { setSelectedType, type, setSelectedCategory, category } = useTypeStore();
   const { messages } = useChatStore();
-  const [selectedTypeButton, setSelectedTypeButton] = React.useState<'SUSI' | 'PYEONIP' | 'JEONGSI' | undefined>(
-    undefined,
-  );
-  const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<
-    undefined | 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST'
-  >(undefined);
+  const [selectedTypeButton, setSelectedTypeButton] = React.useState<TypeCategoryState['type']>(undefined);
+  const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<TypeCategoryState['category']>(undefined);
 
-  const handleTypeButtonClick = (selectedType: 'SUSI' | 'PYEONIP' | 'JEONGSI') => {
+  const handleTypeButtonClick = (selectedType: TypeCategoryState['type']) => {
     setSelectedType(selectedType);
     setSelectedTypeButton(selectedType);
   };
 
-  const handleCategoryButtonClick = (
-    selectedCategory: 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST',
-  ) => {
+  const handleCategoryButtonClick = (selectedCategory: TypeCategoryState['category']) => {
     setSelectedCategory(selectedCategory);
     setSelectedCategoryButton(selectedCategory);
   };
