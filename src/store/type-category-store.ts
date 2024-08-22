@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface TypeCategoryState {
+export interface TypeCategoryState {
   type: undefined | 'SUSI' | 'PYEONIP' | 'JEONGSI';
   category: undefined | 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST';
   setSelectedType: (button: TypeCategoryState['type']) => void;
