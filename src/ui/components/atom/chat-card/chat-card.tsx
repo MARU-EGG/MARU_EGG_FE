@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { cn } from '../../../../utils/style';
 import maru from '../../../../assets/maru-egg.png';
+import Loader from '../loader/loader';
 interface ChatCardProps {
   content: string;
   role: 'user' | 'system';
@@ -24,7 +25,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
           })}
         >
           <div className="font-pretendard text-sm font-normal">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+            {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ const useChatForm = () => {
       e.preventDefault();
       try {
         useChatStore.getState().addMessage({ content, role: 'user' });
-        useChatStore.getState().addMessage({ content: '답변을 생성중입니다...', role: 'system' });
+        useChatStore.getState().addMessage({ content: 'loading', role: 'system' });
         useChatStore.getState().setLoading(true);
         setContent('');
         setAutoOpen(false);
