@@ -1,25 +1,21 @@
 // src/ui/components/organism/chat-section/chat-section.tsx
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
 import PresetButton from '../../atom/preset/preset-button';
 import useTypeStore, { TypeCategoryState } from '../../../../store/type-category-store';
 import useChatStore from '../../../../store/chat-store';
+import useChatSection from '../../../../hooks/use-chat-section.hooks';
 
 const ChatSection: React.FC = () => {
-  const { setSelectedType, type, setSelectedCategory, category } = useTypeStore();
+  const { type, category } = useTypeStore();
   const { messages } = useChatStore();
-  const [selectedTypeButton, setSelectedTypeButton] = React.useState<TypeCategoryState['type']>(undefined);
-  const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<TypeCategoryState['category']>(undefined);
+  const { selectedTypeButton, selectedCategoryButton, handleTypeButtonClick, handleCategoryButtonClick } =
+    useChatSection();
 
-  const handleTypeButtonClick = (selectedType: TypeCategoryState['type']) => {
-    setSelectedType(selectedType);
-    setSelectedTypeButton(selectedType);
-  };
-
-  const handleCategoryButtonClick = (selectedCategory: TypeCategoryState['category']) => {
-    setSelectedCategory(selectedCategory);
-    setSelectedCategoryButton(selectedCategory);
-  };
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, selectedCategoryButton]);
 
   return (
     <div className="max-h-screen-minus-header w-full overflow-y-auto px-4 pb-24 pt-16">
@@ -92,6 +88,7 @@ const ChatSection: React.FC = () => {
       {messages.map((msg, index) => {
         return <ChatCard key={index} content={msg.content} role={msg.role} />;
       })}
+      <div ref={messageEndRef}></div>
     </div>
   );
 };
