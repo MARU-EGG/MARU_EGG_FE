@@ -53,9 +53,9 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
       closable={false}
       open={open}
       onClose={onClose}
-      height="32vh"
-      rootClassName="absolute mx-auto my-auto max-w-[390px] max-h-[780px] rounded-t-3xl"
-      rootStyle={{ width: '100%', borderRadius: '1rem', overflow: 'hidden' }}
+      height="260px"
+      rootClassName="absolute mx-auto my-auto desktop:max-w-[390px] desktop:max-h-[780px] desktop:rounded-t-3xl desktop:rounded-b-3xl mobile:max-w-full mobile:max-h-full mobile:rounded-none mobile:shadow-none"
+      rootStyle={{ width: '100%', overflow: 'hidden' }}
     >
       <div className="flex flex-col space-y-4">
         <div className="flex w-full justify-between">
