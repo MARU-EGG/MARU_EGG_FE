@@ -26,7 +26,7 @@ const Header = ({ type }: HeaderProps) => {
   };
 
   return (
-    <div className="absolute z-10 flex w-full items-center justify-between rounded-tl-2xl rounded-tr-2xl bg-white px-4 py-4">
+    <div className="absolute z-10 flex w-full items-center justify-between bg-white p-4 mobile:rounded-none mobile:px-4 mobile:py-4 desktop:rounded-tl-3xl desktop:rounded-tr-3xl desktop:px-4 desktop:py-4">
       <IconButton onClick={handleRefreshClick}>
         <RefreshIcon />
       </IconButton>

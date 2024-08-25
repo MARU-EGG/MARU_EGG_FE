@@ -12,8 +12,9 @@ module.exports = {
         'background-default': '#F2F2F3',
       },
       screens: {
-        mobile: '360px',
-        desktop: '769px',
+        'mobile_sm' : '320px',
+        'mobile' : '360px',
+        'desktop' : '769px',
       },
       fontFamily: {
         pretendard: 'Pretendard',

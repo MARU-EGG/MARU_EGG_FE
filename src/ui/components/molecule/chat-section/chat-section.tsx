@@ -18,7 +18,7 @@ const ChatSection: React.FC = () => {
   }, [messages, selectedCategoryButton]);
 
   return (
-    <div className="max-h-screen-minus-header w-full overflow-y-auto px-4 pb-24 pt-16">
+    <div className="max-h-100vh w-full overflow-y-auto px-4 pb-24 pt-16">
       <ChatCard
         content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
           궁금하신 내용 안내 도와드리겠습니다.  
@@ -42,7 +42,7 @@ const ChatSection: React.FC = () => {
       {type !== undefined && (
         <>
           <ChatCard content={`알고싶은 내용을 선택해주세요`} role="system" />
-          <div className="flex w-2/5 flex-wrap space-y-2">
+          <div className="flex flex-col items-start space-y-2">
             <PresetButton
               onClick={() => handleCategoryButtonClick('ADMISSION_GUIDELINE')}
               isSelected={selectedCategoryButton === 'ADMISSION_GUIDELINE'}
