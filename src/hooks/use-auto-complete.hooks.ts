@@ -11,9 +11,10 @@ interface UseAutoCompleteProps {
 export interface AutoCompleteResult {
   content: string;
   id: number;
+  isChecked: boolean;
 }
 
-export const useAutoComplete = ({ content, delay = 1000 }: UseAutoCompleteProps) => {
+export const useAutoComplete = ({ content, delay = 400 }: UseAutoCompleteProps) => {
   const [results, setResults] = useState<AutoCompleteResult[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { type, category } = useTypeStore();
