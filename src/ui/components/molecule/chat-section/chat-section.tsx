@@ -29,11 +29,11 @@ const ChatSection: React.FC = () => {
         <PresetButton onClick={() => handleTypeButtonClick('SUSI')} isSelected={selectedTypeButton === 'SUSI'}>
           수시
         </PresetButton>
-        <PresetButton onClick={() => handleTypeButtonClick('PYEONIP')} isSelected={selectedTypeButton === 'PYEONIP'}>
-          편입
-        </PresetButton>
         <PresetButton onClick={() => handleTypeButtonClick('JEONGSI')} isSelected={selectedTypeButton === 'JEONGSI'}>
           정시
+        </PresetButton>
+        <PresetButton onClick={() => handleTypeButtonClick('PYEONIP')} isSelected={selectedTypeButton === 'PYEONIP'}>
+          편입
         </PresetButton>
       </div>
       {type !== undefined && (
