@@ -45,7 +45,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
         await AdminEditAnswer(answer.id, content);
         updateAnswer(answer.id, content);
         if (!isChecked) {
-          await AdminCheckQuestionAnswer({ questionId, check: true });
+          await AdminCheckQuestionAnswer({ questionId });
           updateCheck(questionId, true);
         }
         handleClose();
@@ -59,7 +59,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   const handleCheckToggle = async () => {
     const newCheckStatus = !isChecked;
     await executeWithLoading(async () => {
-      await AdminCheckQuestionAnswer({ questionId, check: newCheckStatus });
+      await AdminCheckQuestionAnswer({ questionId });
       updateCheck(questionId, newCheckStatus);
     });
   };

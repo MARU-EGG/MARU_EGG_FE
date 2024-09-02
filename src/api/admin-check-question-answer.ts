@@ -3,12 +3,10 @@ import { getCookie } from '../utils/cookies';
 
 interface AdminCheckQuestionAnswerProps {
   questionId: number;
-  check: boolean;
 }
-export async function AdminCheckQuestionAnswer({ questionId, check }: AdminCheckQuestionAnswerProps) {
+export async function AdminCheckQuestionAnswer({ questionId }: AdminCheckQuestionAnswerProps) {
   const data = {
     questionId,
-    check,
   };
   try {
     const response = await server_axiosInstance.post('/api/admin/questions/check', JSON.stringify(data), {
