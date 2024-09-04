@@ -1,21 +1,47 @@
 // src/ui/components/organism/chat-section/chat-section.tsx
-import React, { useEffect, useRef } from 'react';
+import * as React from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
 import PresetButton from '../../atom/preset/preset-button';
-import useTypeStore, { TypeCategoryState } from '../../../../store/type-category-store';
+import useTypeStore from '../../../../store/type-category-store';
 import useChatStore from '../../../../store/chat-store';
 import useChatSection from '../../../../hooks/use-chat-section.hooks';
+import { useTypeDisabledStore } from '../../../../store/type-disabled-store';
+import { getTypeStatus } from '../../../../api/admin/question-type-status/get-type-status';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
   const { messages } = useChatStore();
   const { selectedTypeButton, selectedCategoryButton, handleTypeButtonClick, handleCategoryButtonClick } =
     useChatSection();
+  const { activeSusi, activeJeongsi, activePyeonip, setSusiDisabled, setJeongsiDisabled, setPyeonipDisabled } =
+    useTypeDisabledStore();
 
-  const messageEndRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
+  const messageEndRef = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, selectedCategoryButton]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getTypeStatus();
+
+        response.forEach((item: { type: 'SUSI' | 'JEONGSI' | 'PYEONIP'; isActivated: boolean }) => {
+          if (item.type === 'SUSI') {
+            setSusiDisabled(item.isActivated);
+          } else if (item.type === 'JEONGSI') {
+            setJeongsiDisabled(item.isActivated);
+          } else if (item.type === 'PYEONIP') {
+            setPyeonipDisabled(item.isActivated);
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="max-h-100vh w-full overflow-y-auto px-4 pb-24 pt-16">
@@ -26,13 +52,25 @@ const ChatSection: React.FC = () => {
         role="system"
       />
       <div className="flex space-x-2">
-        <PresetButton onClick={() => handleTypeButtonClick('SUSI')} isSelected={selectedTypeButton === 'SUSI'}>
+        <PresetButton
+          disabled={activeSusi}
+          onClick={() => handleTypeButtonClick('SUSI')}
+          isSelected={selectedTypeButton === 'SUSI'}
+        >
           수시
         </PresetButton>
-        <PresetButton onClick={() => handleTypeButtonClick('JEONGSI')} isSelected={selectedTypeButton === 'JEONGSI'}>
+        <PresetButton
+          disabled={activeJeongsi}
+          onClick={() => handleTypeButtonClick('JEONGSI')}
+          isSelected={selectedTypeButton === 'JEONGSI'}
+        >
           정시
         </PresetButton>
-        <PresetButton onClick={() => handleTypeButtonClick('PYEONIP')} isSelected={selectedTypeButton === 'PYEONIP'}>
+        <PresetButton
+          disabled={activePyeonip}
+          onClick={() => handleTypeButtonClick('PYEONIP')}
+          isSelected={selectedTypeButton === 'PYEONIP'}
+        >
           편입
         </PresetButton>
       </div>
