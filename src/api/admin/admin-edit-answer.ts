@@ -1,5 +1,5 @@
-import { server_axiosInstance } from '../utils/axios';
-import { getCookie } from '../utils/cookies';
+import { server_axiosInstance } from '../../utils/axios';
+import { getCookie } from '../../utils/cookies';
 
 export async function AdminEditAnswer(id: number, content: string): Promise<any> {
   const data = {
@@ -8,7 +8,7 @@ export async function AdminEditAnswer(id: number, content: string): Promise<any>
   };
 
   try {
-    const response = await server_axiosInstance.post('/api/admin/answers', JSON.stringify(data), {
+    const response = await server_axiosInstance.put('/api/admin/answers', JSON.stringify(data), {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
         'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Layout, Menu } from 'antd';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import SlideMenu from '../slide-menu/slide-menu';
 import { Header } from 'antd/es/layout/layout';
-import { AdminLogout } from '../../../../api/admin-login';
+import { AdminLogout } from '../../../../api/admin/admin-login';
 import { removeCookie } from '../../../../utils/cookies';
 
 const { Sider, Content, Footer } = Layout;

@@ -1,4 +1,4 @@
-import { llm_axiosInstance } from '../utils/axios';
+import { llm_axiosInstance } from '../../utils/axios';
 
 interface AdminLLMFileProps {
   type?: string;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { UploadFile } from 'antd/es/upload/interface';
 import Uploader from '../../components/admin/Uploader';
 import { useHtmlFileSubmit } from '../../../hooks/use-html-file-submit.hooks';
-import { adminDeleteFile, adminRetrieveFile } from '../../../api/admin-llm-file';
+import { adminDeleteFile, adminRetrieveFile } from '../../../api/admin/admin-llm-file';
 
 interface DataListType {
   key: string;

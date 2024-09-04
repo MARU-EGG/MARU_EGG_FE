@@ -1,4 +1,4 @@
-import { server_axiosInstance } from '../utils/axios';
+import { server_axiosInstance } from '../../utils/axios';
 
 interface AdminQuestionCheckProps {
   type: string;

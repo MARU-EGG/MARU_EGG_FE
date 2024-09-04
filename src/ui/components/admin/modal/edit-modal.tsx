@@ -1,8 +1,8 @@
 import { Button, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useEffect, useState } from 'react';
-import { AdminEditAnswer } from '../../../../api/admin-edit-answer';
-import { AdminCheckQuestionAnswer } from '../../../../api/admin-check-question-answer';
+import { AdminEditAnswer } from '../../../../api/admin/admin-edit-answer';
+import { AdminCheckQuestionAnswer } from '../../../../api/admin/admin-check-question-answer';
 import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
 
 interface CustomModalProps {
