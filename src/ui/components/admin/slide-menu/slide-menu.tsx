@@ -14,6 +14,8 @@ export default function SlideMenu(props: MenuProps) {
       { key: '/admin/setting/file', label: '파일 확인' },
       { type: 'divider' },
       { key: '/admin/generate/question', label: '질문답변 생성' },
+      { type: 'divider' },
+      { key: '/admin/setting/type', label: '전형 활성화 선택' },
     ];
   }, []);
 

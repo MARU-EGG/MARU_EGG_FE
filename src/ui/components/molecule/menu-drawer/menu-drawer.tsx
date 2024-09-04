@@ -63,11 +63,11 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
             <PresetButton onClick={() => handleButtonClick('SUSI')} isSelected={selectedButton === 'SUSI'}>
               수시
             </PresetButton>
-            <PresetButton onClick={() => handleButtonClick('PYEONIP')} isSelected={selectedButton === 'PYEONIP'}>
-              편입
-            </PresetButton>
             <PresetButton onClick={() => handleButtonClick('JEONGSI')} isSelected={selectedButton === 'JEONGSI'}>
               정시
+            </PresetButton>
+            <PresetButton onClick={() => handleButtonClick('PYEONIP')} isSelected={selectedButton === 'PYEONIP'}>
+              편입
             </PresetButton>
           </div>
           <IconButton onClick={onClose}>
@@ -85,13 +85,13 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
         onClick={() => window.open(admissionResultsUrl, '_blank', 'noopener, noreferrer')}
         className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
-        입시결과 바로가기
+        {selectedButton === 'SUSI' ? '수시' : selectedButton === 'JEONGSI' ? '정시' : '편입'} 입시결과 바로가기
       </div>
       <div
         onClick={() => window.open(admissionGuideUrl, '_blank', 'noopener, noreferrer')}
         className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
-        모집요강 바로가기
+        {selectedButton === 'SUSI' ? '수시' : selectedButton === 'JEONGSI' ? '정시' : '편입'} 모집요강 바로가기
       </div>
       <div className="mt-2 space-y-2">
         <div className="flex justify-between px-2 font-pretendard text-xs text-[#767676]">

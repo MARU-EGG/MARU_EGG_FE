@@ -1,5 +1,5 @@
-import { server_axiosInstance } from '../utils/axios';
-import { getCookie, removeCookie, setCookie } from '../utils/cookies';
+import { server_axiosInstance } from '../../utils/axios';
+import { getCookie, removeCookie, setCookie } from '../../utils/cookies';
 
 export async function AdminLogin(email: string, password: string) {
   const data = {
