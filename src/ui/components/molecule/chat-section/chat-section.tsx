@@ -28,11 +28,11 @@ const ChatSection: React.FC = () => {
 
         response.forEach((item: { type: 'SUSI' | 'JEONGSI' | 'PYEONIP'; isActivated: boolean }) => {
           if (item.type === 'SUSI') {
-            setSusiDisabled(item.isActivated);
+            setSusiDisabled(!item.isActivated);
           } else if (item.type === 'JEONGSI') {
-            setJeongsiDisabled(item.isActivated);
+            setJeongsiDisabled(!item.isActivated);
           } else if (item.type === 'PYEONIP') {
-            setPyeonipDisabled(item.isActivated);
+            setPyeonipDisabled(!item.isActivated);
           }
         });
       } catch (error) {
