@@ -10,6 +10,7 @@ export async function chnageTypeStatus({ type }: ChangeTypeStatusProps) {
     const response = await server_axiosInstance.put('/api/admin/questions/status', JSON.stringify({ type: type }), {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
+        'Content-Type': 'application/json',
       },
     });
     return response.data;
