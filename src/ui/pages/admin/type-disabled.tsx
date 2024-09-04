@@ -76,7 +76,7 @@ const TypeDisabled = () => {
     };
 
     fetchData();
-  }, [setJeongsiDisabled, setPyeonipDisabled, setSusiDisabled]);
+  }, []);
 
   const renderSwitch = (label: string, checked: boolean, onChange: () => void) => (
     <div>
