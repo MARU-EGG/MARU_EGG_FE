@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface referenceState {
+export interface referenceState {
   title: string;
   link: string;
 }
