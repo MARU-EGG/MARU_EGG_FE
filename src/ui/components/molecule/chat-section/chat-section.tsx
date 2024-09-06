@@ -1,4 +1,3 @@
-// src/ui/components/organism/chat-section/chat-section.tsx
 import * as React from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
 import PresetButton from '../../atom/preset/preset-button';
@@ -7,15 +6,59 @@ import useChatStore from '../../../../store/chat-store';
 import useChatSection from '../../../../hooks/use-chat-section.hooks';
 import { useTypeDisabledStore } from '../../../../store/type-disabled-store';
 import { getTypeStatus } from '../../../../api/admin/question-type-status/get-type-status';
+import useMessage from 'antd/es/message/useMessage';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
-  const { messages } = useChatStore();
+  const { messages, loading } = useChatStore();
   const { selectedTypeButton, selectedCategoryButton, handleTypeButtonClick, handleCategoryButtonClick } =
     useChatSection();
   const { activeSusi, activeJeongsi, activePyeonip, setSusiDisabled, setJeongsiDisabled, setPyeonipDisabled } =
     useTypeDisabledStore();
 
+  const [messageApi, contextHolder] = useMessage();
+
+  const info = () => {
+    messageApi.open({
+      type: 'info',
+      content: '반드시 첨부자료를 통해 정확한 정보를 확인하세요',
+      className: 'desktop:pt-44 mobile:pt-12 text-sm',
+    });
+  };
+
+  const warning = () => {
+    let contentMessage = '';
+
+    if (!activeSusi && !activeJeongsi && !activePyeonip) {
+      contentMessage = '현재 모든 카테고리 이용이 가능합니다.';
+    } else if (!activeSusi && activeJeongsi && activePyeonip) {
+      contentMessage = '현재 수시 카테고리만 이용 가능합니다.';
+    } else if (activeSusi && !activeJeongsi && activePyeonip) {
+      contentMessage = '현재 정시 카테고리만 이용 가능합니다.';
+    } else if (activeSusi && activeJeongsi && !activePyeonip) {
+      contentMessage = '현재 편입 카테고리만 이용 가능합니다.';
+    } else if (!activeSusi && !activeJeongsi && activePyeonip) {
+      contentMessage = '현재 수시, 정시 카테고리만 이용 가능합니다.';
+    } else if (!activeSusi && activeJeongsi && !activePyeonip) {
+      contentMessage = '현재 수시, 편입 카테고리만 이용 가능합니다.';
+    } else if (activeSusi && !activeJeongsi && !activePyeonip) {
+      contentMessage = '현재 정시, 편입 카테고리만 이용 가능합니다.';
+    }
+
+    if (contentMessage !== '') {
+      messageApi.open({
+        type: 'warning',
+        content: contentMessage,
+        className: 'desktop:pt-44 mobile:pt-12 text-sm',
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    if (category !== undefined && messages[messages.length - 1].role === 'system' && loading === false) {
+      info();
+    }
+  }, [messages]);
   const messageEndRef = React.useRef<HTMLDivElement | null>(null);
   React.useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -39,12 +82,16 @@ const ChatSection: React.FC = () => {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, []);
 
+  React.useEffect(() => {
+    warning();
+  }, [activeSusi, activeJeongsi, activePyeonip]);
+
   return (
     <div className="max-h-100vh w-full overflow-y-auto px-4 pb-24 pt-16">
+      {contextHolder}
       <ChatCard
         content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
           궁금하신 내용 안내 도와드리겠습니다.  
