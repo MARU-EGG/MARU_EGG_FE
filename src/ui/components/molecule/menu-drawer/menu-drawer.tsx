@@ -24,28 +24,32 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
     switch (selectedButton) {
       case 'SUSI':
         return {
+          FAQUrl: 'https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5&cate=%EC%88%98%EC%8B%9C',
           admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=10&mj=01',
           admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=11&b=B_1_2&cate=%EC%88%98%EC%8B%9C',
         };
       case 'PYEONIP':
         return {
+          FAQUrl: 'https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5&cate=%ED%8E%B8%EC%9E%85%ED%95%99',
           admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=26&mj=04',
           admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=27&b=B_1_2&cate=%ED%8E%B8%EC%9E%85%ED%95%99',
         };
       case 'JEONGSI':
         return {
+          FAQUrl: 'https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5&cate=%EC%A0%95%EC%8B%9C',
           admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=16&mj=02',
           admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=17&b=B_1_2&cate=%EC%A0%95%EC%8B%9C',
         };
       default:
         return {
+          FAQUrl: 'https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5&cate=%EC%88%98%EC%8B%9C',
           admissionGuideUrl: 'https://iphak.mju.ac.kr/pages/?p=10&mj=01',
           admissionResultsUrl: 'https://iphak.mju.ac.kr/pages/?p=11&b=B_1_2&cate=%EC%88%98%EC%8B%9C',
         };
     }
   };
 
-  const { admissionGuideUrl, admissionResultsUrl } = getUrls();
+  const { FAQUrl, admissionGuideUrl, admissionResultsUrl } = getUrls();
 
   return (
     <Drawer
@@ -76,22 +80,22 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
         </div>
       </div>
       <div
-        onClick={() => window.open('https://iphak.mju.ac.kr/pages/?p=33&b=B_1_5', '_blank', 'noopener, noreferrer')}
+        onClick={() => window.open(FAQUrl, '_blank', 'noopener, noreferrer')}
         className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
-        FAQ 바로가기
+        {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} FAQ 바로가기
       </div>
       <div
         onClick={() => window.open(admissionResultsUrl, '_blank', 'noopener, noreferrer')}
         className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
-        {selectedButton === 'SUSI' ? '수시' : selectedButton === 'JEONGSI' ? '정시' : '편입'} 입시결과 바로가기
+        {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} 입시결과 바로가기
       </div>
       <div
         onClick={() => window.open(admissionGuideUrl, '_blank', 'noopener, noreferrer')}
         className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
       >
-        {selectedButton === 'SUSI' ? '수시' : selectedButton === 'JEONGSI' ? '정시' : '편입'} 모집요강 바로가기
+        {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} 모집요강 바로가기
       </div>
       <div className="mt-2 space-y-2">
         <div className="flex justify-between px-2 font-pretendard text-xs text-[#767676]">
