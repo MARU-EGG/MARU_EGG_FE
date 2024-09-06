@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ReactComponent as RefreshIcon } from '../../../../assets/Refresh.svg';
 import { ReactComponent as MenuIcon } from '../../../../assets/Menu.svg';
-import maruEgg from '../../../../assets/maru-egg.png';
 import IconButton from '../../atom/icon/icon-button';
 import MenuDrawer from '../menu-drawer/menu-drawer';
 
@@ -31,7 +30,6 @@ const Header = ({ type }: HeaderProps) => {
         <RefreshIcon />
       </IconButton>
       <div className="flex items-center">
-        {/* <img className="mr-2 h-8 w-8" src={maruEgg} alt="마루에그 캐릭터" /> */}
         <div className="mr-8 font-pretendard text-lg font-semibold text-primary-blue">명지대학교 입학처 챗봇</div>
         {type && (
           <ul role="list" className="flex list-disc items-center marker:text-primary-blue">
