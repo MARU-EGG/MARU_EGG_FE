@@ -9,6 +9,7 @@ import { getTypeStatus } from '../../../../api/admin/question-type-status/get-ty
 import useMessage from 'antd/es/message/useMessage';
 import { TypePresetButtons } from '../../user-domain/type-preset-buttons';
 import { CategoryPresetButtons } from '../../user-domain/category-preset-buttons';
+import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
@@ -20,6 +21,7 @@ const ChatSection: React.FC = () => {
   const messageEndRef = React.useRef<HTMLDivElement | null>(null);
 
   const showMessage = (type: 'info' | 'warning', content: string) => {
+    messageApi.destroy();
     messageApi.open({
       type,
       content,
@@ -124,6 +126,7 @@ const ChatSection: React.FC = () => {
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
+      <QuestionPresetButtons />
       <div ref={messageEndRef}></div>
     </div>
   );
