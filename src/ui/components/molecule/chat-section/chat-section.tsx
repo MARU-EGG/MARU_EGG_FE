@@ -26,7 +26,7 @@ const ChatSection: React.FC = () => {
     messageApi.open({
       type,
       content,
-      duration: 300,
+      duration: 3,
       style: {
         position: 'absolute',
         width: 'max-content',
