@@ -10,15 +10,15 @@ import useMessage from 'antd/es/message/useMessage';
 import { TypePresetButtons } from '../../user-domain/type-preset-buttons';
 import { CategoryPresetButtons } from '../../user-domain/category-preset-buttons';
 import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons';
-import { relative } from 'path';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
-  const { messages, loading } = useChatStore();
+  const { messages, loading, referenceButtonDisabled } = useChatStore();
   const { selectedCategoryButton } = useChatSection();
   const { activeSusi, activeJeongsi, activePyeonip, setSusiDisabled, setJeongsiDisabled, setPyeonipDisabled } =
     useTypeDisabledStore();
   const [messageApi, contextHolder] = useMessage();
+
   const messageEndRef = React.useRef<HTMLDivElement | null>(null);
 
   const showMessage = (type: 'info' | 'warning', content: string) => {
@@ -134,7 +134,7 @@ const ChatSection: React.FC = () => {
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
-      {category && messages[messages.length - 1]?.role === 'system' && <QuestionPresetButtons />}
+      {!referenceButtonDisabled && <QuestionPresetButtons />}
       <div ref={messageEndRef}></div>
     </div>
   );

@@ -4,7 +4,7 @@ import useChatStore, { referenceState } from '../store/chat-store';
 
 const useChatSection = () => {
   const { setSelectedType, setSelectedCategory } = useTypeStore();
-  const { addMessage } = useChatStore();
+  const { addMessage, updateReferenceDisabled } = useChatStore();
   const [selectedTypeButton, setSelectedTypeButton] = React.useState<TypeCategoryState['type']>(undefined);
   const [selectedCategoryButton, setSelectedCategoryButton] = React.useState<TypeCategoryState['category']>(undefined);
 
@@ -30,6 +30,7 @@ const useChatSection = () => {
     });
     content += '\n**답변을 꼭 확인해주세요!**';
     addMessage({ content: content, role: 'system' });
+    updateReferenceDisabled(true);
   };
 
   return {
