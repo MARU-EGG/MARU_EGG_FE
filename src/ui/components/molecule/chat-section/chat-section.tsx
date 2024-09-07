@@ -10,6 +10,7 @@ import useMessage from 'antd/es/message/useMessage';
 import { TypePresetButtons } from '../../user-domain/type-preset-buttons';
 import { CategoryPresetButtons } from '../../user-domain/category-preset-buttons';
 import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons';
+import { relative } from 'path';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
@@ -25,7 +26,14 @@ const ChatSection: React.FC = () => {
     messageApi.open({
       type,
       content,
-      className: 'desktop:pt-44 mobile:pt-12 text-sm',
+      duration: 300,
+      style: {
+        position: 'absolute',
+        width: 'max-content',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        top: '4rem',
+      },
     });
   };
 
@@ -126,7 +134,7 @@ const ChatSection: React.FC = () => {
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
-      <QuestionPresetButtons />
+      {category && messages[messages.length - 1]?.role === 'system' && <QuestionPresetButtons />}
       <div ref={messageEndRef}></div>
     </div>
   );
