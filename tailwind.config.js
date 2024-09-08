@@ -12,7 +12,6 @@ module.exports = {
         'background-default': '#F2F2F3',
       },
       screens: {
-        //test
         'mobile' : '360px',
         'desktop' : '769px',
       },
