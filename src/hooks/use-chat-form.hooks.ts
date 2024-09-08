@@ -40,11 +40,15 @@ const useChatForm = () => {
         if (selectedId === undefined) {
           const response = await postQuestion(category, type, content);
           useChatStore.getState().updateLastMessage(response.answer.content);
+          useChatStore.getState().updateLastReference(response.references);
+          useChatStore.getState().updateReferenceDisabled(false);
           useChatStore.getState().setLoading(false);
           setDisabled(false);
         } else {
           const response = await SearchById(selectedId);
           useChatStore.getState().updateLastMessage(response.answer.content);
+          useChatStore.getState().updateLastReference(response.references);
+          useChatStore.getState().updateReferenceDisabled(false);
           useChatStore.getState().setLoading(false);
           setSelectedId(undefined);
           setDisabled(false);
