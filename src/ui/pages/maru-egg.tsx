@@ -1,5 +1,5 @@
 // src/ui/pages/maru-egg.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/molecule/header/header';
 import useTypeStore from '../../store/type-category-store';
 import ChatForm from '../components/molecule/chat-form/chat-form';
@@ -8,7 +8,17 @@ import Onboarding from '../components/molecule/onboarding/onboarding';
 
 const MaruEgg: React.FC = () => {
   const { type, category } = useTypeStore();
-  const [showOnboarding, setShowOnboarding] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    const isFirstVisit = localStorage.getItem('isFirstVisit') === null;
+    if (isFirstVisit) {
+      setShowOnboarding(true);
+      localStorage.setItem('isFirstVisit', 'false');
+    } else {
+      setShowOnboarding(false);
+    }
+  }, []);
 
   const handleCloseOnboarding = () => {
     setShowOnboarding(false);
