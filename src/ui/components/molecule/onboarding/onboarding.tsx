@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import maru from '../../../../assets/maru-egg.svg';
+import onboarding_0 from '../../../../assets/onboarding_0.png';
 import onboarding_1 from '../../../../assets/onboarding_1.png';
 import onboarding_2 from '../../../../assets/onboarding_2.png';
 import onboarding_3 from '../../../../assets/onboarding_3.png';
@@ -14,7 +14,7 @@ const Onboarding = ({ onClose }: OnboardingProps) => {
 
   const steps = [
     {
-      image: maru,
+      image: onboarding_0,
       title: '명지대학교 AI 입학문의 챗봇,',
       subtitle: '마루에그에 오신 것을 환영합니다!',
       description: '1분만에 마루에그의 모든 기능을 알려드려요',
@@ -54,7 +54,7 @@ const Onboarding = ({ onClose }: OnboardingProps) => {
       button2Text: '다음',
     },
     {
-      image: maru,
+      image: onboarding_0,
       title: '마루에그와 함께 입학문의로 보다 쉽게',
       subtitle: '',
       description: '마루에그에 대한 정보가 더 궁금하다면?',
@@ -81,7 +81,7 @@ const Onboarding = ({ onClose }: OnboardingProps) => {
         <div className="flex flex-col">
           {/* Image */}
           <div className="flex h-[232px] w-full items-center justify-center rounded-b-none rounded-t-2xl bg-[#DFE5EE]">
-            <img src={steps[step].image} alt="onboarding-step" className="h-full w-full object-contain" />
+            <img src={steps[step].image} alt="onboarding-step" className="object-contain" />
           </div>
           {/* Text */}
           <div className="space-y-1 py-8">
