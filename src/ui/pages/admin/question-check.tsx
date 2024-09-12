@@ -1,26 +1,39 @@
 import { Divider, Select, Table, TableProps, Tag, AutoComplete, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { adminQuestionCheck } from '../../../api/admin/admin-question-check';
+import { adminQuestionCheck } from '../../../api/admin/question-manage/admin-question-check';
 import EditModal from '../../components/admin/modal/edit-modal';
 import useCheckQuestionAnswerStore, { QuestionAnswerState } from '../../../store/admin/check-question-answer-store';
 import { searchAutoComplete } from '../../../api/search-auto-complete';
-import { SearchById } from '../../../api/admin/admin-search-by-id';
+import { SearchById } from '../../../api/admin/question-manage/admin-search-by-id';
 
 const columns: TableProps<QuestionAnswerState>['columns'] = [
   {
     title: '질문내용',
     dataIndex: 'content',
     key: 'content',
+    width: 500,
   },
   {
     title: '질문횟수',
     dataIndex: 'viewCount',
     key: 'viewCount',
+    sorter: (a, b) => +b.viewCount - +a.viewCount,
   },
   {
     title: '질문확인여부',
     dataIndex: 'isChecked',
     key: 'isChecked',
+    filters: [
+      {
+        text: '확인',
+        value: true,
+      },
+      {
+        text: '미확인',
+        value: false,
+      },
+    ],
+    onFilter: (value, record) => record.isChecked === value,
     render: (isChecked) => (isChecked ? <Tag color="green">확인</Tag> : <Tag color="red">미확인</Tag>),
   },
 ];
