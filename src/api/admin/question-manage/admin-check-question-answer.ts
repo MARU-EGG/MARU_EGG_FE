@@ -1,5 +1,5 @@
-import { server_axiosInstance } from '../../utils/axios';
-import { getCookie } from '../../utils/cookies';
+import { server_axiosInstance } from '../../../utils/axios';
+import { getCookie } from '../../../utils/cookies';
 
 interface AdminCheckQuestionAnswerProps {
   questionId: number;

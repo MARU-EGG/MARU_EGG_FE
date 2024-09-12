@@ -1,5 +1,5 @@
-import { server_axiosInstance } from '../../utils/axios';
-import { getCookie } from '../../utils/cookies';
+import { server_axiosInstance } from '../../../utils/axios';
+import { getCookie } from '../../../utils/cookies';
 
 export async function AdminEditAnswer(id: number, content: string): Promise<any> {
   const data = {

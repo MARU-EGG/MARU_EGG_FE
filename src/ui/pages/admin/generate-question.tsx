@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Divider, Input, Select, message } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { AdminGenerateQuestion } from '../../../api/admin/admin-generate-question';
+import { AdminGenerateQuestion } from '../../../api/admin/question-manage/admin-generate-question';
 const GenerateQuestion = () => {
   const [messageApi, contextHolder] = message.useMessage();
 

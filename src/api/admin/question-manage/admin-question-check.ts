@@ -1,4 +1,4 @@
-import { server_axiosInstance } from '../../utils/axios';
+import { server_axiosInstance } from '../../../utils/axios';
 
 interface AdminQuestionCheckProps {
   type: string;
@@ -7,7 +7,7 @@ interface AdminQuestionCheckProps {
 
 export async function adminQuestionCheck({ type, category }: AdminQuestionCheckProps) {
   try {
-    const response = await server_axiosInstance.get('/api/questions', {
+    const response = await server_axiosInstance.get('/api/questions/check', {
       params: {
         type,
         category,
