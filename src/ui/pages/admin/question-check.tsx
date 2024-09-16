@@ -1,45 +1,14 @@
-import { Divider, Select, Table, TableProps, Tag, AutoComplete, Input } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Divider, Select, Table, TableProps, Tag, AutoComplete, Input, Button, Popconfirm } from 'antd';
+import React, { useEffect, useState, useMemo } from 'react';
 import { adminQuestionCheck } from '../../../api/admin/question-manage/admin-question-check';
 import EditModal from '../../components/admin/modal/edit-modal';
 import useCheckQuestionAnswerStore, { QuestionAnswerState } from '../../../store/admin/check-question-answer-store';
 import { searchAutoComplete } from '../../../api/search-auto-complete';
 import { SearchById } from '../../../api/admin/question-manage/admin-search-by-id';
-
-const columns: TableProps<QuestionAnswerState>['columns'] = [
-  {
-    title: '질문내용',
-    dataIndex: 'content',
-    key: 'content',
-    width: 500,
-  },
-  {
-    title: '질문횟수',
-    dataIndex: 'viewCount',
-    key: 'viewCount',
-    sorter: (a, b) => +b.viewCount - +a.viewCount,
-  },
-  {
-    title: '질문확인여부',
-    dataIndex: 'isChecked',
-    key: 'isChecked',
-    filters: [
-      {
-        text: '확인',
-        value: true,
-      },
-      {
-        text: '미확인',
-        value: false,
-      },
-    ],
-    onFilter: (value, record) => record.isChecked === value,
-    render: (isChecked) => (isChecked ? <Tag color="green">확인</Tag> : <Tag color="red">미확인</Tag>),
-  },
-];
+import { adminDeleteQuestion } from '../../../api/admin/question-manage/admin-delete-question';
 
 const QuestionCheck = () => {
-  const { questionData, updateQuestionData } = useCheckQuestionAnswerStore();
+  const { questionData, updateQuestionData, deleteQuestion } = useCheckQuestionAnswerStore();
   const [type, setType] = useState('SUSI');
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
@@ -97,6 +66,74 @@ const QuestionCheck = () => {
       console.warn('No search option selected');
     }
   };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await adminDeleteQuestion(id);
+      deleteQuestion(id);
+    } catch (error) {
+      console.error('Error deleting question:', error);
+    }
+  };
+
+  const columns: TableProps<QuestionAnswerState>['columns'] = useMemo(
+    () => [
+      {
+        title: '질문내용',
+        dataIndex: 'content',
+        key: 'content',
+      },
+      {
+        title: '질문횟수',
+        dataIndex: 'viewCount',
+        key: 'viewCount',
+        width: 140,
+        sorter: (a, b) => +b.viewCount - +a.viewCount,
+      },
+      {
+        title: '질문확인여부',
+        dataIndex: 'isChecked',
+        width: 140,
+        key: 'isChecked',
+        filters: [
+          {
+            text: '확인',
+            value: true,
+          },
+          {
+            text: '미확인',
+            value: false,
+          },
+        ],
+        onFilter: (value, record) => record.isChecked === value,
+        render: (isChecked) => (isChecked ? <Tag color="green">확인</Tag> : <Tag color="red">미확인</Tag>),
+      },
+      {
+        title: '편집',
+        key: 'edit',
+        width: 150,
+        render: (text, record) => <Button onClick={() => handleRowClick(record)}>편집하기</Button>,
+      },
+      {
+        title: '삭제',
+        key: 'action',
+        width: 150,
+        render: (text, record) => (
+          <Popconfirm
+            title="정말 삭제하시겠습니까?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="예"
+            cancelText="아니오"
+          >
+            <Button type="primary" danger>
+              삭제
+            </Button>
+          </Popconfirm>
+        ),
+      },
+    ],
+    [handleDelete],
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -160,15 +197,7 @@ const QuestionCheck = () => {
         />
       </div>
       <div className="mx-8 my-3">
-        <Table
-          columns={columns}
-          dataSource={questionData}
-          loading={loading}
-          rowKey="id"
-          onRow={(record) => ({
-            onClick: () => handleRowClick(record),
-          })}
-        />
+        <Table columns={columns} dataSource={questionData} loading={loading} rowKey="id" />
       </div>
 
       {selectedQuestion && <EditModal open={modalOpen} setOpen={setModalOpen} questionId={selectedQuestion.id} />}
