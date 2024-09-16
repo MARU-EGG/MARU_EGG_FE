@@ -18,9 +18,10 @@ interface CheckQuestionAnswerState {
   updateCheck: (id: number, isChecked: boolean) => void;
   updateAnswer: (answerId: number, answerContent: string) => void;
   deleteQuestion: (id: number) => void;
+  findQuestion: (id: number) => QuestionAnswerState | undefined;
 }
 
-const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set) => ({
+const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set, get) => ({
   questionData: [],
   updateQuestionData: (firstData) => set({ questionData: firstData }),
   inputQuestionData: (data) => set((state) => ({ questionData: [...state.questionData, data] })),
@@ -40,6 +41,7 @@ const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set) => ({
     set((state) => ({
       questionData: state.questionData.filter((question) => question.id !== id),
     })),
+  findQuestion: (id) => get().questionData.find((question) => question.id === id),
 }));
 
 export default useCheckQuestionAnswerStore;

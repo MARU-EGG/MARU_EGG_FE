@@ -13,22 +13,18 @@ interface CustomModalProps {
 }
 
 const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
-  const { questionData, updateCheck, updateAnswer, deleteQuestion } = useCheckQuestionAnswerStore();
-  const question = questionData.find((question) => question.id === questionId);
-  if (!question) {
-    return null;
-  }
+  const { findQuestion, updateCheck, updateAnswer, deleteQuestion } = useCheckQuestionAnswerStore();
+  const question = findQuestion(questionId);
 
-  const { content: modalTitle, answer, isChecked } = question;
   const [editStatus, setEditStatus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState(answer.content);
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     if (question) {
-      setContent(answer.content);
+      setContent(question.answer.content);
     }
-  }, [answer.content]);
+  }, [question]);
 
   const executeWithLoading = async (action: () => Promise<void>) => {
     setLoading(true);
@@ -42,28 +38,32 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   };
 
   const handleEditSubmit = async () => {
-    await executeWithLoading(async () => {
-      try {
-        await AdminEditAnswer(answer.id, content);
-        updateAnswer(answer.id, content);
-        if (!isChecked) {
-          await AdminCheckQuestionAnswer({ questionId });
-          updateCheck(questionId, true);
+    if (question?.answer.id !== undefined) {
+      await executeWithLoading(async () => {
+        try {
+          await AdminEditAnswer(question.answer.id, content);
+          updateAnswer(question.answer.id, content);
+          if (!question.isChecked) {
+            await AdminCheckQuestionAnswer({ questionId });
+            updateCheck(questionId, true);
+          }
+          handleClose();
+        } catch (err) {
+          console.error(err);
+          throw err;
         }
-        handleClose();
-      } catch (err) {
-        console.error(err);
-        throw err;
-      }
-    }).catch(() => setEditStatus(false));
+      }).catch(() => setEditStatus(false));
+    }
   };
 
   const handleCheckToggle = async () => {
-    const newCheckStatus = !isChecked;
-    await executeWithLoading(async () => {
-      await AdminCheckQuestionAnswer({ questionId });
-      updateCheck(questionId, newCheckStatus);
-    });
+    const newCheckStatus = !question?.isChecked;
+    if (question) {
+      await executeWithLoading(async () => {
+        await AdminCheckQuestionAnswer({ questionId });
+        updateCheck(questionId, newCheckStatus);
+      });
+    }
   };
 
   const handleClose = () => {
@@ -72,9 +72,11 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   };
 
   const handleDelete = async () => {
-    await adminDeleteQuestion(question.id);
-    deleteQuestion(question.id);
-    handleClose();
+    if (question?.id !== undefined) {
+      await adminDeleteQuestion(question.id);
+      deleteQuestion(question.id);
+      handleClose();
+    }
   };
 
   const enableEditMode = () => {
@@ -85,10 +87,10 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
     setContent(e.target.value);
   };
 
-  return (
+  return question ? (
     <Modal
       open={open}
-      title={`${modalTitle} - ${isChecked ? '질문 확인됨' : '질문 미확인'}`}
+      title={`${question.content} - ${question.isChecked ? '질문 확인됨' : '질문 미확인'}`}
       onCancel={handleClose}
       footer={[
         editStatus ? (
@@ -100,7 +102,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
             편집하기
           </Button>
         ),
-        !isChecked ? (
+        !question.isChecked ? (
           <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed">
             질문-답변 확인 상태 변경
           </Button>
@@ -114,9 +116,13 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
         </Button>,
       ]}
     >
-      {editStatus ? <TextArea rows={25} value={content} onChange={handleChange} /> : <div>{answer.content}</div>}
+      {editStatus ? (
+        <TextArea rows={25} value={content} onChange={handleChange} />
+      ) : (
+        <div>{question.answer.content}</div>
+      )}
     </Modal>
-  );
+  ) : null;
 };
 
 export default EditModal;
