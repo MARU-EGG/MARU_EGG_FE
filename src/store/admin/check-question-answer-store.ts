@@ -13,10 +13,11 @@ export interface QuestionAnswerState {
 
 interface CheckQuestionAnswerState {
   questionData: QuestionAnswerState[];
-  updateQuestionData: (firstData: QuestionAnswerState[]) => void; //처음 데이터를 삽입할 때 사용하는 거
-  inputQuestionData: (data: QuestionAnswerState) => void; //커스텀 질문 생성시 사용하는거
-  updateCheck: (id: number, isChecked: boolean) => void; //질문-답변 상태 확인할 때 사용
-  updateAnswer: (answerId: number, answerContent: string) => void; //답변 내용 변경할 때 사용
+  updateQuestionData: (firstData: QuestionAnswerState[]) => void;
+  inputQuestionData: (data: QuestionAnswerState) => void;
+  updateCheck: (id: number, isChecked: boolean) => void;
+  updateAnswer: (answerId: number, answerContent: string) => void;
+  deleteQuestion: (id: number) => void;
 }
 
 const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set) => ({
@@ -34,6 +35,10 @@ const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set) => ({
           ? { ...question, answer: { ...question.answer, content: answerContent } }
           : question,
       ),
+    })),
+  deleteQuestion: (id) =>
+    set((state) => ({
+      questionData: state.questionData.filter((question) => question.id !== id),
     })),
 }));
 

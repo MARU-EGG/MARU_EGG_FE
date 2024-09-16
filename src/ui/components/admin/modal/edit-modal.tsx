@@ -1,9 +1,10 @@
 import { Button, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useEffect, useState } from 'react';
-import { AdminEditAnswer } from '../../../../api/admin/admin-edit-answer';
-import { AdminCheckQuestionAnswer } from '../../../../api/admin/admin-check-question-answer';
+import { AdminEditAnswer } from '../../../../api/admin/question-manage/admin-edit-answer';
+import { AdminCheckQuestionAnswer } from '../../../../api/admin/question-manage/admin-check-question-answer';
 import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
+import { adminDeleteQuestion } from '../../../../api/admin/question-manage/admin-delete-question';
 
 interface CustomModalProps {
   open: boolean;
@@ -12,11 +13,12 @@ interface CustomModalProps {
 }
 
 const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
-  const { questionData, updateCheck, updateAnswer } = useCheckQuestionAnswerStore();
+  const { questionData, updateCheck, updateAnswer, deleteQuestion } = useCheckQuestionAnswerStore();
   const question = questionData.find((question) => question.id === questionId);
   if (!question) {
     return null;
   }
+
   const { content: modalTitle, answer, isChecked } = question;
   const [editStatus, setEditStatus] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -26,7 +28,7 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
     if (question) {
       setContent(answer.content);
     }
-  }, [questionId, open]);
+  }, [answer.content]);
 
   const executeWithLoading = async (action: () => Promise<void>) => {
     setLoading(true);
@@ -40,8 +42,8 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   };
 
   const handleEditSubmit = async () => {
-    try {
-      await executeWithLoading(async () => {
+    await executeWithLoading(async () => {
+      try {
         await AdminEditAnswer(answer.id, content);
         updateAnswer(answer.id, content);
         if (!isChecked) {
@@ -49,11 +51,11 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
           updateCheck(questionId, true);
         }
         handleClose();
-      });
-    } catch (err) {
-      setEditStatus(false);
-      console.error(err);
-    }
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    }).catch(() => setEditStatus(false));
   };
 
   const handleCheckToggle = async () => {
@@ -69,6 +71,12 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
     setEditStatus(false);
   };
 
+  const handleDelete = async () => {
+    await adminDeleteQuestion(question.id);
+    deleteQuestion(question.id);
+    handleClose();
+  };
+
   const enableEditMode = () => {
     setEditStatus(true);
   };
@@ -80,21 +88,9 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
   return (
     <Modal
       open={open}
-      title={`${modalTitle} - 질문 확인 상태: ${isChecked}`}
+      title={`${modalTitle} - ${isChecked ? '질문 확인됨' : '질문 미확인'}`}
       onCancel={handleClose}
       footer={[
-        <Button key="close" onClick={handleClose}>
-          닫기
-        </Button>,
-        !isChecked ? (
-          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed">
-            질문-답변 확인 상태 변경
-          </Button>
-        ) : (
-          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed" danger>
-            질문-답변 미확인 상태 변경
-          </Button>
-        ),
         editStatus ? (
           <Button key="submit" onClick={handleEditSubmit} loading={loading} type="primary">
             편집완료
@@ -104,6 +100,18 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
             편집하기
           </Button>
         ),
+        !isChecked ? (
+          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed">
+            질문-답변 확인 상태 변경
+          </Button>
+        ) : (
+          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed" danger>
+            질문-답변 미확인 상태 변경
+          </Button>
+        ),
+        <Button key="close" onClick={handleDelete} danger>
+          질문삭제하기
+        </Button>,
       ]}
     >
       {editStatus ? <TextArea rows={25} value={content} onChange={handleChange} /> : <div>{answer.content}</div>}
