@@ -7,7 +7,7 @@ interface AdminQuestionCheckProps {
 
 export async function adminQuestionCheck({ type, category }: AdminQuestionCheckProps) {
   try {
-    const response = await server_axiosInstance.get('/api/questions/check', {
+    const response = await server_axiosInstance.get('/api/questions', {
       params: {
         type,
         category,
