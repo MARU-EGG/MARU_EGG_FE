@@ -13,28 +13,48 @@ export interface QuestionAnswerState {
 
 interface CheckQuestionAnswerState {
   questionData: QuestionAnswerState[];
-  updateQuestionData: (firstData: QuestionAnswerState[]) => void; //처음 데이터를 삽입할 때 사용하는 거
-  inputQuestionData: (data: QuestionAnswerState) => void; //커스텀 질문 생성시 사용하는거
-  updateCheck: (id: number, isChecked: boolean) => void; //질문-답변 상태 확인할 때 사용
-  updateAnswer: (answerId: number, answerContent: string) => void; //답변 내용 변경할 때 사용
+  updateQuestionData: (firstData: QuestionAnswerState[]) => void;
+  updateQuestion: (id: number, content: string) => void;
+  updateIsChecked: (id: number) => void;
+  updateAnswer: (answerId: number, answerContent: string) => void;
+  deleteQuestion: (id: number) => void; // 삭제 함수 추가
+  findQuestion: (id: number) => QuestionAnswerState | undefined;
 }
 
-const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set) => ({
+const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set, get) => ({
   questionData: [],
+
   updateQuestionData: (firstData) => set({ questionData: firstData }),
-  inputQuestionData: (data) => set((state) => ({ questionData: [...state.questionData, data] })),
-  updateCheck: (id, isChecked) =>
+
+  updateQuestion: (id, content) =>
     set((state) => ({
-      questionData: state.questionData.map((question) => (question.id === id ? { ...question, isChecked } : question)),
+      questionData: state.questionData.map((question) =>
+        question.id === id ? { ...question, content, isChecked: true } : question,
+      ),
     })),
+
+  updateIsChecked: (id) =>
+    set((state) => ({
+      questionData: state.questionData.map((question) =>
+        question.id === id ? { ...question, isChecked: true } : question,
+      ),
+    })),
+
   updateAnswer: (answerId, answerContent) =>
     set((state) => ({
       questionData: state.questionData.map((question) =>
         question.answer.id === answerId
-          ? { ...question, answer: { ...question.answer, content: answerContent } }
+          ? { ...question, answer: { ...question.answer, content: answerContent }, isChecked: true }
           : question,
       ),
     })),
+
+  deleteQuestion: (id) =>
+    set((state) => ({
+      questionData: state.questionData.filter((question) => question.id !== id), // 삭제 로직
+    })),
+
+  findQuestion: (id) => get().questionData.find((question) => question.id === id),
 }));
 
 export default useCheckQuestionAnswerStore;

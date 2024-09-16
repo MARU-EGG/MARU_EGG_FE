@@ -1,8 +1,8 @@
 import { Button, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useEffect, useState } from 'react';
-import { AdminEditAnswer } from '../../../../api/admin/admin-edit-answer';
-import { AdminCheckQuestionAnswer } from '../../../../api/admin/admin-check-question-answer';
+import { AdminEditAnswer } from '../../../../api/admin/question-manage/admin-edit-answer';
+import { adminEditQuestion } from '../../../../api/admin/question-manage/admin-edit-question';
 import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
 
 interface CustomModalProps {
@@ -12,103 +12,70 @@ interface CustomModalProps {
 }
 
 const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
-  const { questionData, updateCheck, updateAnswer } = useCheckQuestionAnswerStore();
-  const question = questionData.find((question) => question.id === questionId);
-  if (!question) {
-    return null;
-  }
-  const { content: modalTitle, answer, isChecked } = question;
-  const [editStatus, setEditStatus] = useState(false);
+  const { findQuestion, updateQuestion, updateAnswer } = useCheckQuestionAnswerStore();
+  const question = findQuestion(questionId);
+
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState(answer.content);
+  const [questionContent, setQuestionContent] = useState('');
+  const [answerContent, setAnswerContent] = useState('');
 
   useEffect(() => {
     if (question) {
-      setContent(answer.content);
+      setQuestionContent(question.content);
+      setAnswerContent(question.answer.content);
     }
-  }, [questionId, open]);
-
-  const executeWithLoading = async (action: () => Promise<void>) => {
-    setLoading(true);
-    try {
-      await action();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [question]);
 
   const handleEditSubmit = async () => {
-    try {
-      await executeWithLoading(async () => {
-        await AdminEditAnswer(answer.id, content);
-        updateAnswer(answer.id, content);
-        if (!isChecked) {
-          await AdminCheckQuestionAnswer({ questionId });
-          updateCheck(questionId, true);
-        }
-        handleClose();
-      });
-    } catch (err) {
-      setEditStatus(false);
-      console.error(err);
+    if (question?.id !== undefined && question?.answer.id !== undefined) {
+      setLoading(true);
+      try {
+        await adminEditQuestion(question.id, questionContent);
+        await AdminEditAnswer(question.answer.id, answerContent);
+        updateQuestion(question.id, questionContent);
+        updateAnswer(question.answer.id, answerContent);
+        setOpen(false);
+      } catch (error) {
+        console.error('Error editing question/answer:', error);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
-
-  const handleCheckToggle = async () => {
-    const newCheckStatus = !isChecked;
-    await executeWithLoading(async () => {
-      await AdminCheckQuestionAnswer({ questionId });
-      updateCheck(questionId, newCheckStatus);
-    });
   };
 
   const handleClose = () => {
     setOpen(false);
-    setEditStatus(false);
   };
 
-  const enableEditMode = () => {
-    setEditStatus(true);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
-
-  return (
+  return question ? (
     <Modal
       open={open}
-      title={`${modalTitle} - 질문 확인 상태: ${isChecked}`}
+      title="질문 및 답변 수정"
       onCancel={handleClose}
       footer={[
-        <Button key="close" onClick={handleClose}>
-          닫기
+        <Button key="submit" onClick={handleEditSubmit} loading={loading} type="dashed">
+          수정 완료
         </Button>,
-        !isChecked ? (
-          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed">
-            질문-답변 확인 상태 변경
-          </Button>
-        ) : (
-          <Button key="checked" onClick={handleCheckToggle} loading={loading} type="dashed" danger>
-            질문-답변 미확인 상태 변경
-          </Button>
-        ),
-        editStatus ? (
-          <Button key="submit" onClick={handleEditSubmit} loading={loading} type="primary">
-            편집완료
-          </Button>
-        ) : (
-          <Button key="edit" onClick={enableEditMode} type="primary">
-            편집하기
-          </Button>
-        ),
       ]}
     >
-      {editStatus ? <TextArea rows={25} value={content} onChange={handleChange} /> : <div>{answer.content}</div>}
+      <div>
+        <h3>질문 수정</h3>
+        <TextArea
+          rows={4}
+          value={questionContent}
+          onChange={(e) => setQuestionContent(e.target.value)}
+          placeholder="질문 내용을 수정하세요"
+        />
+        <h3 className="mt-4">답변 수정</h3>
+        <TextArea
+          rows={4}
+          value={answerContent}
+          onChange={(e) => setAnswerContent(e.target.value)}
+          placeholder="답변 내용을 수정하세요"
+        />
+      </div>
     </Modal>
-  );
+  ) : null;
 };
 
 export default EditModal;

@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { useAutoComplete } from './use-auto-complete.hooks';
 import useChatStore from '../store/chat-store';
 import { postQuestion } from '../api/post-question';
-import { SearchById } from '../api/admin/admin-search-by-id';
+import { SearchById } from '../api/admin/question-manage/admin-search-by-id';
 import useTypeStore from '../store/type-category-store';
 
 const useChatForm = () => {
