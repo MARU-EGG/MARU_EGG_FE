@@ -1,9 +1,10 @@
 import { Button, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import React, { useEffect, useState } from 'react';
-import { AdminEditAnswer } from '../../../../api/admin/question-manage/admin-edit-answer';
-import { adminEditQuestion } from '../../../../api/admin/question-manage/admin-edit-question';
 import useCheckQuestionAnswerStore from '../../../../store/admin/check-question-answer-store';
+import { adminEditQuestion } from '../../../../api/admin/question-manage/admin-edit-question';
+import { AdminEditAnswer } from '../../../../api/admin/question-manage/admin-edit-answer';
+import { AdminCheckQuestionAnswer } from '../../../../api/admin/question-manage/admin-check-question-answer';
 
 interface CustomModalProps {
   open: boolean;
@@ -12,7 +13,7 @@ interface CustomModalProps {
 }
 
 const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
-  const { findQuestion, updateQuestion, updateAnswer } = useCheckQuestionAnswerStore();
+  const { findQuestion, updateQuestion, updateAnswer, updateIsChecked } = useCheckQuestionAnswerStore();
   const question = findQuestion(questionId);
 
   const [loading, setLoading] = useState(false);
@@ -43,6 +44,21 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
     }
   };
 
+  const handleQuestionStatusSubmit = async () => {
+    if (question?.id !== undefined) {
+      setLoading(true);
+      try {
+        await AdminCheckQuestionAnswer({ questionId });
+        updateIsChecked(questionId);
+        setOpen(false);
+      } catch (error) {
+        console.error('Error check status failed', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -53,7 +69,10 @@ const EditModal = ({ open, setOpen, questionId }: CustomModalProps) => {
       title="질문 및 답변 수정"
       onCancel={handleClose}
       footer={[
-        <Button key="submit" onClick={handleEditSubmit} loading={loading} type="dashed">
+        <Button key="submit" onClick={handleQuestionStatusSubmit} loading={loading} type="dashed">
+          질문 확인 완료
+        </Button>,
+        <Button key="submit" onClick={handleEditSubmit} loading={loading} type="primary">
           수정 완료
         </Button>,
       ]}

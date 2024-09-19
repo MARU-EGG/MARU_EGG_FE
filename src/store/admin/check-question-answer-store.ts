@@ -36,7 +36,7 @@ const useCheckQuestionAnswerStore = create<CheckQuestionAnswerState>((set, get) 
   updateIsChecked: (id) =>
     set((state) => ({
       questionData: state.questionData.map((question) =>
-        question.id === id ? { ...question, isChecked: true } : question,
+        question.id === id ? { ...question, isChecked: !question.isChecked } : question,
       ),
     })),
 
