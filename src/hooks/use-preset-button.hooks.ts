@@ -1,7 +1,6 @@
 import useChatStore, { referenceState } from '../store/chat-store';
 import useTypeStore from '../store/type-category-store';
 import { postQuestion } from '../api/post-question';
-import { SearchById } from '../api/admin/question-manage/admin-search-by-id';
 
 const usePresetButton = () => {
   const { type, category } = useTypeStore();
