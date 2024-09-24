@@ -11,21 +11,21 @@ export const TypePresetButtons = () => {
   return (
     <div className="flex space-x-2">
       <PresetButton
-        disabled={activeSusi || referenceButtonDisabled}
+        disabled={activeSusi || !referenceButtonDisabled}
         onClick={() => handleTypeButtonClick('SUSI')}
         isSelected={selectedTypeButton === 'SUSI'}
       >
         수시
       </PresetButton>
       <PresetButton
-        disabled={activeJeongsi || referenceButtonDisabled}
+        disabled={activeJeongsi || !referenceButtonDisabled}
         onClick={() => handleTypeButtonClick('JEONGSI')}
         isSelected={selectedTypeButton === 'JEONGSI'}
       >
         정시
       </PresetButton>
       <PresetButton
-        disabled={activePyeonip || referenceButtonDisabled}
+        disabled={activePyeonip || !referenceButtonDisabled}
         onClick={() => handleTypeButtonClick('PYEONIP')}
         isSelected={selectedTypeButton === 'PYEONIP'}
       >

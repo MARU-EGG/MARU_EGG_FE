@@ -11,21 +11,21 @@ export const CategoryPresetButtons = () => {
       <PresetButton
         onClick={() => handleCategoryButtonClick('ADMISSION_GUIDELINE')}
         isSelected={selectedCategoryButton === 'ADMISSION_GUIDELINE'}
-        disabled={referenceButtonDisabled}
+        disabled={!referenceButtonDisabled}
       >
         모집관련내용
       </PresetButton>
       <PresetButton
         onClick={() => handleCategoryButtonClick('PASSING_RESULT')}
         isSelected={selectedCategoryButton === 'PASSING_RESULT'}
-        disabled={referenceButtonDisabled}
+        disabled={!referenceButtonDisabled}
       >
         전년도 입시결과
       </PresetButton>
       <PresetButton
         onClick={() => handleCategoryButtonClick('PAST_QUESTIONS')}
         isSelected={selectedCategoryButton === 'PAST_QUESTIONS'}
-        disabled={referenceButtonDisabled}
+        disabled={!referenceButtonDisabled}
       >
         면접등 기출문제
       </PresetButton>
