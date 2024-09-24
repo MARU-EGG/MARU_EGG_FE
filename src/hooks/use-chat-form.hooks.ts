@@ -28,6 +28,23 @@ const useChatForm = () => {
     setAutoOpen(false);
   }, []);
 
+  const fetchResponse = async () => {
+    if (selectedId === undefined) {
+      return await postQuestion(category, type, content);
+    } else {
+      return await SearchById(selectedId);
+    }
+  };
+
+  const updateStateWithResponse = (response: any) => {
+    updateLastMessage(response.answer.content);
+    updateLastReference(response.references);
+    updateReferenceDisabled(false);
+    setLoading(false);
+    setDisabled(false);
+    setSelectedId(undefined);
+  };
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -38,22 +55,8 @@ const useChatForm = () => {
         setContent('');
         setAutoOpen(false);
         setDisabled(true);
-        if (selectedId === undefined) {
-          const response = await postQuestion(category, type, content);
-          updateLastMessage(response.answer.content);
-          updateLastReference(response.references);
-          updateReferenceDisabled(false);
-          setLoading(false);
-          setDisabled(false);
-        } else {
-          const response = await SearchById(selectedId);
-          updateLastMessage(response.answer.content);
-          updateLastReference(response.references);
-          updateReferenceDisabled(false);
-          setLoading(false);
-          setSelectedId(undefined);
-          setDisabled(false);
-        }
+        const response = await fetchResponse();
+        updateStateWithResponse(response);
       } catch (error) {
         setLoading(false);
         updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
