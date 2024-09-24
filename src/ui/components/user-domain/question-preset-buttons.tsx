@@ -17,7 +17,7 @@ export const QuestionPresetButtons = () => {
       <PresetButton onClick={() => handleButtonClick('제출서류 유의사항')}>제출서류</PresetButton>
       <PresetButton onClick={() => handleButtonClick('입시결과안내')}>입시결과</PresetButton>
       <PresetButton onClick={() => handleButtonClick('실기고사')}>실기고사</PresetButton>
-      <PresetButton onClick={() => window.location.reload()}>내용 변경하기</PresetButton>
+      <PresetButton onClick={() => window.location.reload()}>조건 재설정</PresetButton>
     </div>
   );
 };
