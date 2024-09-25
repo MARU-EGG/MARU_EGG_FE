@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
-import PresetButton from '../../atom/preset/preset-button';
 import useTypeStore from '../../../../store/type-category-store';
 import useChatStore from '../../../../store/chat-store';
 import useChatSection from '../../../../hooks/use-chat-section.hooks';
@@ -14,7 +13,6 @@ import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
   const { messages, loading, referenceButtonDisabled } = useChatStore();
-  const { selectedCategoryButton } = useChatSection();
   const { activeSusi, activeJeongsi, activePyeonip, setSusiDisabled, setJeongsiDisabled, setPyeonipDisabled } =
     useTypeDisabledStore();
   const [messageApi, contextHolder] = useMessage();
@@ -89,7 +87,7 @@ const ChatSection: React.FC = () => {
 
   React.useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, selectedCategoryButton]);
+  }, [messages, category, referenceButtonDisabled]);
 
   React.useEffect(() => {
     updateCategoryStatus();
@@ -134,7 +132,7 @@ const ChatSection: React.FC = () => {
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
-      {!referenceButtonDisabled && <QuestionPresetButtons />}
+      {category && <QuestionPresetButtons />}
       <div ref={messageEndRef}></div>
     </div>
   );

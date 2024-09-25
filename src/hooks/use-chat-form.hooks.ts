@@ -7,6 +7,7 @@ import { SearchById } from '../api/admin/question-manage/admin-search-by-id';
 import useTypeStore from '../store/type-category-store';
 
 const useChatForm = () => {
+  const { addMessage, setLoading, updateLastMessage, updateLastReference, updateReferenceDisabled } = useChatStore();
   const [content, setContent] = useState<string>('');
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [disabled, setDisabled] = useState(false);
@@ -27,35 +28,38 @@ const useChatForm = () => {
     setAutoOpen(false);
   }, []);
 
+  const fetchResponse = async () => {
+    if (selectedId === undefined) {
+      return await postQuestion(category, type, content);
+    } else {
+      return await SearchById(selectedId);
+    }
+  };
+
+  const updateStateWithResponse = (response: any) => {
+    updateLastMessage(response.answer.content);
+    updateLastReference(response.references);
+    updateReferenceDisabled(false);
+    setLoading(false);
+    setDisabled(false);
+    setSelectedId(undefined);
+  };
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       try {
-        useChatStore.getState().addMessage({ content, role: 'user' });
-        useChatStore.getState().addMessage({ content: 'loading', role: 'system' });
-        useChatStore.getState().setLoading(true);
+        addMessage({ content, role: 'user' });
+        addMessage({ content: 'loading', role: 'system' });
+        setLoading(true);
         setContent('');
         setAutoOpen(false);
         setDisabled(true);
-        if (selectedId === undefined) {
-          const response = await postQuestion(category, type, content);
-          useChatStore.getState().updateLastMessage(response.answer.content);
-          useChatStore.getState().updateLastReference(response.references);
-          useChatStore.getState().updateReferenceDisabled(false);
-          useChatStore.getState().setLoading(false);
-          setDisabled(false);
-        } else {
-          const response = await SearchById(selectedId);
-          useChatStore.getState().updateLastMessage(response.answer.content);
-          useChatStore.getState().updateLastReference(response.references);
-          useChatStore.getState().updateReferenceDisabled(false);
-          useChatStore.getState().setLoading(false);
-          setSelectedId(undefined);
-          setDisabled(false);
-        }
+        const response = await fetchResponse();
+        updateStateWithResponse(response);
       } catch (error) {
-        useChatStore.getState().setLoading(false);
-        useChatStore.getState().updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
+        setLoading(false);
+        updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
       }
     },
     [content, selectedId, category, type],
