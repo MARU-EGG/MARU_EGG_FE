@@ -24,7 +24,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
             'justify-start text-left': role !== 'user',
           })}
         >
-          <div className="font-pretendard text-sm font-normal">
+          <div className="text-md font-pretendard font-normal">
             {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
           </div>
         </div>

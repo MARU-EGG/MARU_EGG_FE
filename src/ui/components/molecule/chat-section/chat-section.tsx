@@ -101,16 +101,24 @@ const ChatSection: React.FC = () => {
     <div className="max-h-100vh w-full overflow-y-auto px-4 pb-24 pt-16">
       {contextHolder}
       <ChatCard
-        content={`안녕하세요 입학처 챗봇 MARU-EGG입니다!  
-        궁금하신 내용 안내 도와드리겠습니다.  
-        알아보고 싶은 전형을 선택해주세요!`}
+        content={`안녕하세요.       
+        입학처 챗봇 마루에그입니다!           
+        문의사항은 아래 전형 중 하나를 선택해주시면            
+        안내 도와드릴게요!`}
         role="system"
       />
       <TypePresetButtons />
       {type && <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />}
       {type && (
         <>
-          <ChatCard content="알고싶은 내용을 선택해주세요" role="system" />
+          <ChatCard
+            content={`${
+              type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'
+            }와 관련하여 궁금하신 점이 있으신가요?        
+            아래에서 관련 버튼을 선택하여        
+            자세한 내용을 확인해주세요!`}
+            role="system"
+          />
           <CategoryPresetButtons />
         </>
       )}
@@ -127,7 +135,19 @@ const ChatSection: React.FC = () => {
         />
       )}
       {type && category && (
-        <ChatCard role="system" content="안녕하세요 입학처 챗봇 MARU-EGG입니다! 궁금하신 내용 안내 도와드리겠습니다." />
+        <ChatCard
+          role="system"
+          content={`${type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'}
+          전형에서 ${
+            category === 'PASSING_RESULT'
+              ? '전년도 입시결과'
+              : category === 'ADMISSION_GUIDELINE'
+                ? '모집 관련'
+                : '기출문제'
+          }가 궁금하신가요?
+          아래 버튼을 선택하여 더 자세한 내용을 알아보거나     
+          직접 질문해보세요!`}
+        />
       )}
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
