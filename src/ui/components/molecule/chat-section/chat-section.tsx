@@ -38,19 +38,19 @@ const ChatSection: React.FC = () => {
   const showCategoryStatus = () => {
     let contentMessage = '';
     if (!activeSusi && !activeJeongsi && !activePyeonip) {
-      contentMessage = '현재 모든 카테고리 이용이 가능합니다.';
+      contentMessage = '현재는 모든 카테고리 이용이 가능해요.';
     } else if (!activeSusi && activeJeongsi && activePyeonip) {
-      contentMessage = '현재 수시 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 수시 카테고리만 이용 가능해요.';
     } else if (activeSusi && !activeJeongsi && activePyeonip) {
-      contentMessage = '현재 정시 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 정시 카테고리만 이용 가능해요.';
     } else if (activeSusi && activeJeongsi && !activePyeonip) {
-      contentMessage = '현재 편입 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 편입 카테고리만 이용 가능해요.';
     } else if (!activeSusi && !activeJeongsi && activePyeonip) {
-      contentMessage = '현재 수시, 정시 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 수시, 정시 카테고리만 이용 가능해요.';
     } else if (!activeSusi && activeJeongsi && !activePyeonip) {
-      contentMessage = '현재 수시, 편입 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 수시, 편입 카테고리만 이용 가능해요';
     } else if (activeSusi && !activeJeongsi && !activePyeonip) {
-      contentMessage = '현재 정시, 편입 카테고리만 이용 가능합니다.';
+      contentMessage = '현재는 정시, 편입 카테고리만 이용 가능해요.';
     }
 
     if (contentMessage) {
@@ -102,7 +102,7 @@ const ChatSection: React.FC = () => {
       {contextHolder}
       <ChatCard
         content={`안녕하세요.       
-        입학처 챗봇 마루에그입니다!           
+        명지대학교 입학 AI챗봇 마루에그입니다!           
         문의사항은 아래 전형 중 하나를 선택해주시면            
         안내 도와드릴게요!`}
         role="system"
@@ -137,14 +137,13 @@ const ChatSection: React.FC = () => {
       {type && category && (
         <ChatCard
           role="system"
-          content={`${type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'}
-          전형에서 ${
+          content={`${type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'}에서 ${
             category === 'PASSING_RESULT'
               ? '전년도 입시결과'
               : category === 'ADMISSION_GUIDELINE'
                 ? '모집 관련'
                 : '기출문제'
-          }가 궁금하신가요?
+          }을(를) 선택하셨네요!                 
           아래 버튼을 선택하여 더 자세한 내용을 알아보거나     
           직접 질문해보세요!`}
         />
