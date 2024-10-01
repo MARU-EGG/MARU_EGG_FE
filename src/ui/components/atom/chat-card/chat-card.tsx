@@ -21,7 +21,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
         <div
           className={cn('flex w-auto rounded-md bg-white px-5 py-3 text-black', {
             'justify-end bg-primary-blue text-white': role === 'user',
-            'justify-start text-left': role !== 'user',
+            'max-w-full justify-start text-left mobile:max-w-full desktop:max-w-[2/3]': role !== 'user', // 모바일에서는 w-auto,
           })}
         >
           <div className="text-md font-pretendard font-normal">
