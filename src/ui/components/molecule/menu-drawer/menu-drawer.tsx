@@ -57,7 +57,7 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
       closable={false}
       open={open}
       onClose={onClose}
-      height="260px"
+      height="300px"
       rootClassName="absolute mx-auto my-auto desktop:max-w-[390px] desktop:max-h-[780px] desktop:rounded-t-3xl desktop:rounded-b-3xl mobile:max-w-full mobile:max-h-full mobile:rounded-none mobile:shadow-none"
       rootStyle={{ width: '100%', overflow: 'hidden' }}
     >
@@ -81,19 +81,19 @@ const MenuDrawer = ({ open, onClose }: MenuDrawerProps) => {
       </div>
       <div
         onClick={() => window.open(FAQUrl, '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-base hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} FAQ 바로가기
       </div>
       <div
         onClick={() => window.open(admissionResultsUrl, '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-base hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} 입시결과 바로가기
       </div>
       <div
         onClick={() => window.open(admissionGuideUrl, '_blank', 'noopener, noreferrer')}
-        className="w-full cursor-pointer p-2 text-start font-pretendard text-sm hover:rounded-lg hover:bg-[#F4F4F4]"
+        className="w-full cursor-pointer p-2 text-start font-pretendard text-base hover:rounded-lg hover:bg-[#F4F4F4]"
       >
         {selectedButton === 'PYEONIP' ? '편입' : selectedButton === 'JEONGSI' ? '정시' : '수시'} 모집요강 바로가기
       </div>

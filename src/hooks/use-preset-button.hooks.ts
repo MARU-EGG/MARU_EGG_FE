@@ -8,7 +8,8 @@ const usePresetButton = () => {
 
   const handleReferenceButtonClick = (references: referenceState[]) => {
     let content = '답변 출처를 알려드릴게요!\n';
-    if (references === undefined || references.length === 0) {
+    // references가 null, undefined, 또는 길이가 0인 경우 체크
+    if (!references || references.length === 0) {
       addMessage({ content: '출처 정보가 없습니다.', role: 'system' });
       return;
     }

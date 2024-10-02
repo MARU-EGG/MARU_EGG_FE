@@ -8,7 +8,7 @@ export const QuestionPresetButtons = () => {
   const { handleReferenceButtonClick, handleButtonClick } = usePresetButton();
 
   return (
-    <div>
+    <div className="grid w-full grid-cols-1 gap-2 mobile:w-2/3 mobile:grid-cols-1 desktop:grid desktop:w-full desktop:grid-cols-2 desktop:gap-2">
       {!referenceButtonDisabled && (
         <PresetButton onClick={() => handleReferenceButtonClick(lastReference)}>👆 출처를 알고싶어요</PresetButton>
       )}
