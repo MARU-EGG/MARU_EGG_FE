@@ -24,7 +24,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
             'justify-start text-left mobile:max-w-full desktop:max-w-[2/3]': role !== 'user', // 모바일에서는 w-auto,
           })}
         >
-          <div className="text-md font-pretendard font-normal">
+          <div className="text-md max-w-full font-pretendard font-normal">
             {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
           </div>
         </div>
