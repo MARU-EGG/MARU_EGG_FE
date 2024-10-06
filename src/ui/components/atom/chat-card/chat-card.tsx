@@ -19,12 +19,12 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
         })}
       >
         <div
-          className={cn('flex w-auto rounded-md bg-white px-5 py-3 text-black', {
+          className={cn('flex w-auto break-words rounded-md bg-white px-5 py-3 text-black', {
             'justify-end bg-primary-blue text-white': role === 'user',
-            'max-w-full justify-start text-left mobile:max-w-full desktop:max-w-[2/3]': role !== 'user', // 모바일에서는 w-auto,
+            'justify-start text-left mobile:max-w-full desktop:max-w-[2/3]': role !== 'user', // 모바일에서는 w-auto,
           })}
         >
-          <div className="text-md font-pretendard font-normal">
+          <div className="text-md max-w-full font-pretendard font-normal">
             {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
           </div>
         </div>
