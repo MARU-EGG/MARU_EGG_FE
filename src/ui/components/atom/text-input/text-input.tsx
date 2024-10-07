@@ -7,16 +7,16 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
   disabled?: boolean;
 }
 
-const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(function TextArea(
+const TextInput = React.forwardRef<HTMLTextAreaElement, TextInputProps>(function TextArea(
   { disabled = false, placeholder, onValueChange, value },
   ref,
 ) {
   return (
-    <input
+    <textarea
       ref={ref}
-      type="text"
+      rows={2}
       className={cn(
-        `w-full rounded-2xl bg-transparent px-4 py-2 text-base`,
+        `w-full resize-none rounded-2xl bg-transparent px-4 py-2 text-base`,
         `placeholder:text-[#72777A] focus:outline-none`,
         `disabled:cursor-wait`,
       )}

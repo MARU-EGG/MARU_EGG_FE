@@ -152,7 +152,7 @@ const ChatSection: React.FC = () => {
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
       {category && <QuestionPresetButtons />}
-      <div ref={messageEndRef}></div>
+      <div className="h-6" ref={messageEndRef}></div>
     </div>
   );
 };
