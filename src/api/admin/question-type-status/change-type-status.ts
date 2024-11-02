@@ -1,11 +1,11 @@
 import { server_axiosInstance } from '../../../utils/axios';
 import { getCookie } from '../../../utils/cookies';
 
-interface ChangeTypeStatusProps {
+export interface TypeStatusProps {
   type: 'SUSI' | 'JEONGSI' | 'PYEONIP';
 }
 
-export async function chnageTypeStatus({ type }: ChangeTypeStatusProps) {
+export async function chnageTypeStatus({ type }: TypeStatusProps) {
   try {
     const response = await server_axiosInstance.put('/api/admin/questions/status', JSON.stringify({ type: type }), {
       headers: {
