@@ -66,6 +66,13 @@ const DetailTypeCheck = () => {
           },
         ],
         onFilter: (value, record) => record.type === value,
+        sorter: (a, b) => {
+          if (a.name !== undefined && b.name !== undefined) {
+            return a.name.localeCompare(b.name);
+          }
+          return 0;
+        },
+        defaultSortOrder: 'descend',
       },
       {
         title: '세부전형',
