@@ -51,6 +51,21 @@ const DetailTypeCheck = () => {
         key: 'type',
         width: 150,
         render: (type: string) => typeMapping[type] || type,
+        filters: [
+          {
+            text: '수시',
+            value: 'SUSI',
+          },
+          {
+            text: '정시',
+            value: 'JEONGSI',
+          },
+          {
+            text: '편입',
+            value: 'PYEONIP',
+          },
+        ],
+        onFilter: (value, record) => record.type === value,
       },
       {
         title: '세부전형',
