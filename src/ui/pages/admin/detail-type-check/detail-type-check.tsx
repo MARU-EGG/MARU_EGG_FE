@@ -37,6 +37,12 @@ const DetailTypeCheck = () => {
     fetchData();
   }, [modalOpen]);
 
+  const typeMapping: Record<string, string> = {
+    SUSI: '수시',
+    JEONGSI: '정시',
+    PYEONIP: '편입',
+  };
+
   const columns: TableProps<AdmissionDetailTypeState>['columns'] = useMemo(
     () => [
       {
@@ -44,6 +50,7 @@ const DetailTypeCheck = () => {
         dataIndex: 'type',
         key: 'type',
         width: 150,
+        render: (type: string) => typeMapping[type] || type,
       },
       {
         title: '세부전형',
