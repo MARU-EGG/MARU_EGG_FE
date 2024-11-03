@@ -1,4 +1,3 @@
-// src/hooks/useChatForm.ts
 import { useState, useCallback } from 'react';
 import { useAutoComplete } from './use-auto-complete.hooks';
 import useChatStore from '../store/chat-store';
@@ -46,7 +45,7 @@ const useChatForm = () => {
   };
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
       e.preventDefault();
       try {
         addMessage({ content, role: 'user' });
