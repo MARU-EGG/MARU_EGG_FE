@@ -23,7 +23,7 @@ export const updateAdmissionTypeDetail = async ({ id, name }: AdmissionDetailTyp
 
 export const deleteAdmissionTypeDetail = async (id: number) => {
   try {
-    const response = server_axiosInstance.delete(`/api/admin/admission/${id}`, {
+    const response = server_axiosInstance.delete(`/api/admin/admissions/${id}`, {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
