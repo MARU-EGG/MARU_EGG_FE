@@ -1,47 +1,35 @@
-import { useEffect, useState } from 'react';
-import { TypeStatusProps } from '../api/admin/question-type-status/change-type-status';
-import { getDetailType } from '../api/get-admission-detail-type.query';
 import { useUserDetailTypeStore } from '../store/user-detail-type-store';
 
-export const useDetailTypePrompt = ({ type }: TypeStatusProps) => {
-  const [middleNameArray, setMiddleNameArray] = useState<string[]>([]);
-  const [lastNameArray, setLastNameArray] = useState<string[]>([]);
-  const { detailTypeData, updateDetailTypeData } = useUserDetailTypeStore();
+interface DetailTypeItem {
+  middleName: string;
+  lastNames: string[];
+}
 
-  useEffect(() => {
-    const fetchDetailType = async () => {
-      try {
-        const response = await getDetailType({ type });
-        updateDetailTypeData(response);
-      } catch (error) {
-        console.error('Fetching Failed');
-      }
-    };
+export const useDetailTypePrompt = () => {
+  const { detailTypeData } = useUserDetailTypeStore();
 
-    fetchDetailType();
-  }, [type, updateDetailTypeData]);
+  const itemMap = new Map<string, Set<string>>();
 
-  useEffect(() => {
-    if (detailTypeData.length > 0) {
-      const middleNameSet = new Set<string>();
-      const lastNameArrayTemp: string[] = [];
+  detailTypeData.forEach((item) => {
+    const [middle, lastWithBracket] = item.name.split('(');
+    const middleTrimmed = middle.trim();
+    const lastTrimmed = lastWithBracket ? lastWithBracket.replace(/\)$/, '').trim() : '';
 
-      detailTypeData.forEach((item) => {
-        const parts = item.name.split('(');
-        const middle = parts[0];
-        middleNameSet.add(middle);
-
-        const last = parts.slice(1).join('(').replace(/\)$/, '');
-        lastNameArrayTemp.push(last);
-      });
-
-      setMiddleNameArray(Array.from(middleNameSet));
-      setLastNameArray(lastNameArrayTemp);
+    if (!itemMap.has(middleTrimmed)) {
+      itemMap.set(middleTrimmed, new Set<string>());
     }
-  }, [detailTypeData]);
+
+    if (lastTrimmed) {
+      itemMap.get(middleTrimmed)?.add(lastTrimmed);
+    }
+  });
+
+  const itemList: DetailTypeItem[] = Array.from(itemMap.entries()).map(([middleName, lastNamesSet]) => ({
+    middleName,
+    lastNames: Array.from(lastNamesSet),
+  }));
 
   return {
-    middleNameArray,
-    lastNameArray,
+    itemList,
   };
 };
