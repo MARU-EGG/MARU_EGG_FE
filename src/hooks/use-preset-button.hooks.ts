@@ -46,9 +46,29 @@ const usePresetButton = () => {
     }
   };
 
+  const handleDetailTypeButtonClick = async (detailTypeName: string) => {
+    try {
+      addMessage({ content: detailTypeName, role: 'user' });
+      addMessage({ content: 'loading', role: 'system' });
+      setLoading(true);
+
+      const response = await fetchResponse(`${detailTypeName}에 대해 설명해줘 단 아래의 출력 형식을 반드시 따라줘
+        **[전형제목]** 
+        **[전형방법]**  
+        **[지원자격]**  
+        **[제출서류]**  
+        아래 버튼을 눌러 더 자세한 정보를 확인하거나 직접 질문해보세요!`);
+      updateStateWithResponse(response);
+    } catch (error) {
+      setLoading(false);
+      updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
+    }
+  };
+
   return {
     handleReferenceButtonClick,
     handleButtonClick,
+    handleDetailTypeButtonClick,
   };
 };
 
