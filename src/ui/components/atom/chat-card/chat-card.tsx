@@ -7,8 +7,9 @@ import Loader from '../loader/loader';
 interface ChatCardProps {
   content: string;
   role: 'user' | 'system';
+  children?: React.ReactNode;
 }
-const ChatCard = ({ content, role }: ChatCardProps) => {
+const ChatCard = ({ content, role, children }: ChatCardProps) => {
   return (
     <div>
       {role === 'user' ? null : <img src={maru} className="mt-2 h-8 w-8" />}
@@ -26,6 +27,7 @@ const ChatCard = ({ content, role }: ChatCardProps) => {
         >
           <div className="text-md max-w-full font-pretendard font-normal">
             {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
+            {children}
           </div>
         </div>
       </div>

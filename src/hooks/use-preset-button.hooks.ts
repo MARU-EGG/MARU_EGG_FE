@@ -46,9 +46,24 @@ const usePresetButton = () => {
     }
   };
 
+  const handleDetailTypeButtonClick = async (detailTypeName: string) => {
+    try {
+      addMessage({ content: detailTypeName, role: 'user' });
+      addMessage({ content: 'loading', role: 'system' });
+      setLoading(true);
+
+      const response = await fetchResponse(`${detailTypeName}에 대해 설명해줘`);
+      updateStateWithResponse(response);
+    } catch (error) {
+      setLoading(false);
+      updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
+    }
+  };
+
   return {
     handleReferenceButtonClick,
     handleButtonClick,
+    handleDetailTypeButtonClick,
   };
 };
 
