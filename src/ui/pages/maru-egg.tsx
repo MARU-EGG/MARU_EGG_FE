@@ -5,9 +5,11 @@ import useTypeStore from '../../store/type-category-store';
 import ChatForm from '../components/molecule/chat-form/chat-form';
 import ChatSection from '../components/molecule/chat-section/chat-section';
 import Onboarding from '../components/molecule/onboarding/onboarding';
+import { useUserDetailTypeStore } from '../../store/user-detail-type-store';
 
 const MaruEgg: React.FC = () => {
-  const { type, category } = useTypeStore();
+  const { type } = useTypeStore();
+  const { selectedName } = useUserDetailTypeStore();
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const MaruEgg: React.FC = () => {
         {showOnboarding && <Onboarding onClose={handleCloseOnboarding} />}
         <Header type={type} />
         <ChatSection />
-        {type !== undefined && category !== undefined && (
+        {selectedName !== '' && (
           <div className="absolute bottom-0 w-full bg-white px-3 py-3 mobile:rounded-none desktop:rounded-bl-3xl desktop:rounded-br-3xl">
             <ChatForm />
           </div>

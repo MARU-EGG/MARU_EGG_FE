@@ -12,7 +12,7 @@ export const getAllDetailType = async () => {
 
 export const getDetailType = async ({ type }: TypeStatusProps) => {
   try {
-    const response = await server_axiosInstance.get(`/api/admissions/detail/${type}`);
+    const response = await server_axiosInstance.get(`/api/admissions/details/${type}`);
     return response.data;
   } catch (error: any) {
     throw new Error('get all detail type fail', error);
