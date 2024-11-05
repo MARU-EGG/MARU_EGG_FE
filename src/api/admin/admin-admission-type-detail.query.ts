@@ -1,18 +1,13 @@
+import { AdmissionDetailTypeState } from '../../store/admin/admission-detail-type-store';
 import { server_axiosInstance } from '../../utils/axios';
 import { getCookie } from '../../utils/cookies';
-import { TypeStatusProps } from './question-type-status/change-type-status';
 
-export interface AdmissionTypeDetailProps extends TypeStatusProps {
-  detailTypeId: number;
-  detailTypeName: string;
-}
-
-export const updateAdmissionTypeDetail = async ({ detailTypeId, detailTypeName }: AdmissionTypeDetailProps) => {
+export const updateAdmissionTypeDetail = async ({ id, name }: AdmissionDetailTypeState) => {
   try {
     const response = server_axiosInstance.put(
-      `/api/admin/admissions/${detailTypeId}`,
+      `/api/admin/admissions/${id}`,
       {
-        detailTypeName,
+        name,
       },
       {
         headers: {
@@ -26,9 +21,9 @@ export const updateAdmissionTypeDetail = async ({ detailTypeId, detailTypeName }
   }
 };
 
-export const deleteAdmissionTypeDetail = async ({ detailTypeId }: AdmissionTypeDetailProps) => {
+export const deleteAdmissionTypeDetail = async (id: number) => {
   try {
-    const response = server_axiosInstance.delete(`/api/admin/admission/${detailTypeId}`, {
+    const response = server_axiosInstance.delete(`/api/admin/admissions/${id}`, {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
@@ -39,12 +34,12 @@ export const deleteAdmissionTypeDetail = async ({ detailTypeId }: AdmissionTypeD
   }
 };
 
-export const generateAdmissionTypeDetail = async ({ type, detailTypeName }: AdmissionTypeDetailProps) => {
+export const generateAdmissionTypeDetail = async ({ type, name }: AdmissionDetailTypeState) => {
   try {
-    const response = server_axiosInstance.put(
+    const response = server_axiosInstance.post(
       `/api/admin/admissions/detail`,
       {
-        detail: detailTypeName,
+        detail: name,
         type: type,
       },
       {
