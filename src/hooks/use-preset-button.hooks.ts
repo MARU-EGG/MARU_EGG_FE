@@ -24,6 +24,12 @@ const usePresetButton = () => {
   const fetchResponse = async (question: string) => {
     return await postQuestion(category, type, question);
   };
+  const customCategoryFetchResponse = async (
+    question: string,
+    customCategory: 'ADMISSION_GUIDELINE' | 'PASSING_RESULT' | 'PAST_QUESTIONS' | 'INTERVIEW_PRACTICAL_TEST',
+  ) => {
+    return await postQuestion(customCategory, type, question);
+  };
 
   const updateStateWithResponse = (response: any) => {
     updateLastMessage(response.answer.content);
@@ -32,14 +38,19 @@ const usePresetButton = () => {
     setLoading(false);
   };
 
-  const handleButtonClick = async (question: string) => {
+  const handleButtonClick = async (question: string, category?: string) => {
     try {
       addMessage({ content: question, role: 'user' });
       addMessage({ content: 'loading', role: 'system' });
       setLoading(true);
 
-      const response = await fetchResponse(question);
-      updateStateWithResponse(response);
+      if (category === 'PASSING_RESULT' || category === 'PAST_QUESTIONS' || category === 'INTERVIEW_PRACTICAL_TEST') {
+        const response = await customCategoryFetchResponse(question, category);
+        updateStateWithResponse(response);
+      } else {
+        const response = await fetchResponse(question);
+        updateStateWithResponse(response);
+      }
     } catch (error) {
       setLoading(false);
       updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');

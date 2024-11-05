@@ -2,16 +2,12 @@ import * as React from 'react';
 import useChatStore from '../../../store/chat-store';
 import PresetButton from '../atom/preset/preset-button';
 import usePresetButton from '../../../hooks/use-preset-button.hooks';
-import useTypeStore from '../../../store/type-category-store';
 
 export const QuestionPresetButtons = () => {
   const { lastReference, referenceButtonDisabled } = useChatStore();
-  const { setContentCategory } = useTypeStore();
   const { handleReferenceButtonClick, handleButtonClick } = usePresetButton();
   const handleReultButtonClick = (content: string) => {
-    setContentCategory('PASSING_RESULT');
-    handleButtonClick(content);
-    setContentCategory('ADMISSION_GUIDELINE');
+    handleButtonClick(content, 'PASSING_RESULT');
   };
 
   return (
