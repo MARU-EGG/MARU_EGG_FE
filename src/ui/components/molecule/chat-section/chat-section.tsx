@@ -2,13 +2,14 @@ import * as React from 'react';
 import ChatCard from '../../atom/chat-card/chat-card';
 import useTypeStore from '../../../../store/type-category-store';
 import useChatStore from '../../../../store/chat-store';
-import useChatSection from '../../../../hooks/use-chat-section.hooks';
 import { useTypeDisabledStore } from '../../../../store/type-disabled-store';
 import { getTypeStatus } from '../../../../api/admin/question-type-status/get-type-status';
 import useMessage from 'antd/es/message/useMessage';
 import { TypePresetButtons } from '../../user-domain/type-preset-buttons';
-import { CategoryPresetButtons } from '../../user-domain/category-preset-buttons';
 import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons';
+import Dropdown from '../../atom/dropdown/dropdown';
+import { getDetailType } from '../../../../api/get-admission-detail-type.query';
+import { useUserDetailTypeStore } from '../../../../store/user-detail-type-store';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
@@ -16,6 +17,7 @@ const ChatSection: React.FC = () => {
   const { activeSusi, activeJeongsi, activePyeonip, setSusiDisabled, setJeongsiDisabled, setPyeonipDisabled } =
     useTypeDisabledStore();
   const [messageApi, contextHolder] = useMessage();
+  const { updateDetailTypeData, itemsArray, selectedName } = useUserDetailTypeStore();
 
   const messageEndRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -94,6 +96,21 @@ const ChatSection: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    const fetchDetailType = async () => {
+      try {
+        if (type !== undefined) {
+          const response = await getDetailType({ type });
+          updateDetailTypeData(response);
+        }
+      } catch (error) {
+        console.error('Fetching Failed', error);
+      }
+    };
+
+    fetchDetailType();
+  }, [type]);
+
+  React.useEffect(() => {
     showCategoryStatus();
   }, [activeSusi, activeJeongsi, activePyeonip]);
 
@@ -108,50 +125,21 @@ const ChatSection: React.FC = () => {
         role="system"
       />
       <TypePresetButtons />
-      {type && <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />}
       {type && (
         <>
+          <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
           <ChatCard
-            content={`${
-              type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'
-            }와 관련하여 궁금하신 점이 있으신가요?        
-            아래에서 관련 버튼을 선택하여        
-            자세한 내용을 확인해주세요!`}
             role="system"
-          />
-          <CategoryPresetButtons />
+            content={`어떤 세부 학과가 궁금하신가요? 아래에서 세부 전형을 선택해주세요!`}
+          ></ChatCard>
+          <div>{selectedName ? <></> : <Dropdown type={type} items={itemsArray} />}</div>
         </>
       )}
-      {category && (
-        <ChatCard
-          role="user"
-          content={
-            category === 'ADMISSION_GUIDELINE'
-              ? '모집관련내용'
-              : category === 'PASSING_RESULT'
-                ? '전년도 입시결과'
-                : '면접 등 기출문제'
-          }
-        />
-      )}
-      {type && category && (
-        <ChatCard
-          role="system"
-          content={`${type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'}에서 ${
-            category === 'PASSING_RESULT'
-              ? '전년도 입시결과'
-              : category === 'ADMISSION_GUIDELINE'
-                ? '모집 관련'
-                : '기출문제'
-          }을(를) 선택하셨네요!                 
-          아래 버튼을 선택하여 더 자세한 내용을 알아보거나     
-          직접 질문해보세요!`}
-        />
-      )}
+
       {messages.map((msg, index) => (
         <ChatCard key={index} content={msg.content} role={msg.role} />
       ))}
-      {category && <QuestionPresetButtons />}
+      {selectedName && <QuestionPresetButtons />}
       <div className="h-6" ref={messageEndRef}></div>
     </div>
   );
