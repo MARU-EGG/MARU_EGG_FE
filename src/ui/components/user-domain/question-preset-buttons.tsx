@@ -16,7 +16,7 @@ export const QuestionPresetButtons = () => {
         <PresetButton onClick={() => handleReferenceButtonClick(lastReference)}>👆 출처를 알고싶어요</PresetButton>
       )}
       <PresetButton onClick={() => handleButtonClick('전형일정')}>전형일정</PresetButton>
-      <PresetButton onClick={() => handleButtonClick('면접 유의사항')}>면접유의사항</PresetButton>
+      <PresetButton onClick={() => handleButtonClick('블라인드 면접 유의사항')}>면접유의사항</PresetButton>
       <PresetButton onClick={() => handleButtonClick('제출서류 유의사항')}>제출서류</PresetButton>
       <PresetButton onClick={() => handleReultButtonClick('입시결과')}>입시결과</PresetButton>
       <PresetButton onClick={() => handleButtonClick('실기고사')}>실기고사</PresetButton>

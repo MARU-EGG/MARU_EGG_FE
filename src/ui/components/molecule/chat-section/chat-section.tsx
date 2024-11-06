@@ -130,7 +130,7 @@ const ChatSection: React.FC = () => {
           <ChatCard role="user" content={type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입'} />
           <ChatCard
             role="system"
-            content={`어떤 세부 학과가 궁금하신가요? 아래에서 세부 전형을 선택해주세요!`}
+            content={`어떤 세부 전형이 궁금하신가요? 아래에서 세부 전형을 선택해주세요!`}
           ></ChatCard>
           <div>{selectedName ? <></> : <Dropdown type={type} items={itemsArray} />}</div>
         </>
