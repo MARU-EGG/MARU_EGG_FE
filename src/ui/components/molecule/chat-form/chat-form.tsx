@@ -1,5 +1,4 @@
 import React from 'react';
-import TextInput from '../../atom/text-input/text-input';
 import IconButton from '../../atom/icon/icon-button';
 import { ReactComponent as SendIcon } from '../../../../assets/Send.svg';
 import AutoCompleteList from '../../atom/auto-complete/auto-complete';
