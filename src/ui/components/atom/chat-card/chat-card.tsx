@@ -26,7 +26,22 @@ const ChatCard = ({ content, role, children }: ChatCardProps) => {
           })}
         >
           <div className="text-md max-w-full font-pretendard font-normal">
-            {content === 'loading' ? <Loader /> : <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>}
+            {content === 'loading' ? (
+              <Loader />
+            ) : (
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer">
+                      {props.children}
+                    </a>
+                  ),
+                }}
+              >
+                {content}
+              </ReactMarkdown>
+            )}
             {children}
           </div>
         </div>
