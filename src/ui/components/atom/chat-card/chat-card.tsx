@@ -33,7 +33,7 @@ const ChatCard = ({ content, role, children }: ChatCardProps) => {
                 remarkPlugins={[remarkGfm]}
                 components={{
                   a: ({ node, ...props }) => (
-                    <a {...props} target="_blank" rel="noopener noreferrer">
+                    <a {...props} className="font-pretendard text-blue-600" target="_blank" rel="noopener noreferrer">
                       {props.children}
                     </a>
                   ),
