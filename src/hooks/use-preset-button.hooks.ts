@@ -1,10 +1,12 @@
 import useChatStore, { referenceState } from '../store/chat-store';
 import useTypeStore from '../store/type-category-store';
 import { postQuestion } from '../api/post-question';
+import { useUserDetailTypeStore } from '../store/user-detail-type-store';
 
 const usePresetButton = () => {
   const { type, category } = useTypeStore();
   const { addMessage, setLoading, updateLastMessage, updateLastReference, updateReferenceDisabled } = useChatStore();
+  const { selectedName } = useUserDetailTypeStore();
 
   const handleReferenceButtonClick = (references: referenceState[]) => {
     let content = '💡답변 출처를 알려드릴게요! 링크를 클릭하면 모집요강으로 확인할 수 있어요!\n';
@@ -38,6 +40,25 @@ const usePresetButton = () => {
     setLoading(false);
   };
 
+  // const handleButtonClick = async (question: string, category?: string) => {
+  //   try {
+  //     addMessage({ content: question, role: 'user' });
+  //     addMessage({ content: 'loading', role: 'system' });
+  //     setLoading(true);
+
+  //     if (category === 'PASSING_RESULT' || category === 'PAST_QUESTIONS' || category === 'INTERVIEW_PRACTICAL_TEST') {
+  //       const response = await customCategoryFetchResponse(question, category);
+  //       updateStateWithResponse(response);
+  //     } else {
+  //       const response = await fetchResponse(question);
+  //       updateStateWithResponse(response);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //     updateLastMessage('답변 생성에 실패했습니다. 새로고침해주세요');
+  //   }
+  // };
+
   const handleButtonClick = async (question: string, category?: string) => {
     try {
       addMessage({ content: question, role: 'user' });
@@ -45,7 +66,10 @@ const usePresetButton = () => {
       setLoading(true);
 
       if (category === 'PASSING_RESULT' || category === 'PAST_QUESTIONS' || category === 'INTERVIEW_PRACTICAL_TEST') {
-        const response = await customCategoryFetchResponse(question, category);
+        const response = await customCategoryFetchResponse(
+          `${selectedName}전형의 모든 학과에 대한 ${question}알려줘`,
+          category,
+        );
         updateStateWithResponse(response);
       } else {
         const response = await fetchResponse(question);
