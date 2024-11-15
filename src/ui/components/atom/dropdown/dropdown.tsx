@@ -26,13 +26,16 @@ const Dropdown: React.FC<DropdownProps> = ({ type }) => {
         <button style={{ display: 'hidden' }}></button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className="rounded-md border-gray-300 bg-white" align="start">
+        <DropdownMenu.Content
+          className="mt-[-18px] min-w-[140px] rounded-md border border-gray-300 bg-white"
+          align="start"
+        >
           {type === 'PYEONIP'
             ? // 편입의 경우, 한 번에 전체 목록 표시
               items.map((item, index) => (
                 <DropdownMenu.Item
                   key={index}
-                  className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                  className="cursor-pointer rounded-md px-2 py-2 hover:bg-gray-100"
                   onClick={() => handleNameClick(item.middleName)}
                 >
                   {item.middleName}
@@ -41,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({ type }) => {
             : // 수시, 정시의 경우, 중간 이름을 상위 메뉴로, 마지막 이름을 하위 메뉴로 표시
               items.map((item, index) => (
                 <DropdownMenu.Sub key={index}>
-                  <DropdownMenu.SubTrigger className="flex cursor-pointer items-center justify-between px-4 py-2 hover:bg-gray-100">
+                  <DropdownMenu.SubTrigger className="flex cursor-pointer items-center justify-between rounded-md px-4 py-2 hover:rounded-md hover:bg-gray-100">
                     {item.middleName}
                     <ChevronRightIcon />
                   </DropdownMenu.SubTrigger>
@@ -50,7 +53,7 @@ const Dropdown: React.FC<DropdownProps> = ({ type }) => {
                       {item.lastNames.map((lastName, subIndex) => (
                         <DropdownMenu.Item
                           key={subIndex}
-                          className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                          className="cursor-pointer px-4 py-2 hover:rounded-md hover:bg-gray-100"
                           onClick={() => handleNameClick(lastName)}
                         >
                           {lastName}

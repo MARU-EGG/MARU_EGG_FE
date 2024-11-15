@@ -1,14 +1,14 @@
 import React from 'react';
 import { cn } from '../../../../utils/style';
 
-export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   value?: string;
   onValueChange?: (value: string) => void;
   disabled?: boolean;
 }
 
 const TextInput = React.forwardRef<HTMLTextAreaElement, TextInputProps>(function TextArea(
-  { disabled = false, placeholder, onValueChange, value },
+  { disabled = false, placeholder, onValueChange, value, onKeyDown },
   ref,
 ) {
   return (
@@ -26,6 +26,7 @@ const TextInput = React.forwardRef<HTMLTextAreaElement, TextInputProps>(function
       onChange={(e) => {
         onValueChange?.(e.target.value);
       }}
+      onKeyDown={onKeyDown}
     />
   );
 });
