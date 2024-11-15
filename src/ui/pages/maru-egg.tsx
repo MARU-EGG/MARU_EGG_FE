@@ -28,7 +28,7 @@ const MaruEgg: React.FC = () => {
 
   return (
     <div className="flex h-svh items-center justify-center bg-gray-100">
-      <div className="relative flex h-full w-full bg-background-default mobile:h-full mobile:min-h-[480px] mobile:min-w-[320px] mobile:rounded-none desktop:h-[780px] desktop:max-w-[390px] desktop:rounded-3xl desktop:border desktop:border-gray-200 desktop:shadow-2xl">
+      <div className="scrollbar-hide relative flex h-full w-full bg-background-default mobile:h-full mobile:min-h-[480px] mobile:min-w-[320px] mobile:rounded-none desktop:h-[780px] desktop:max-w-[390px] desktop:rounded-3xl desktop:border desktop:border-gray-200 desktop:shadow-2xl">
         {showOnboarding && <Onboarding onClose={handleCloseOnboarding} />}
         <Header type={type} />
         <ChatSection />
