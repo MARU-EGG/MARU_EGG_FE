@@ -9,14 +9,14 @@ const usePresetButton = () => {
   const { selectedName } = useUserDetailTypeStore();
 
   const handleReferenceButtonClick = (references: referenceState[]) => {
-    let content = '💡답변 출처를 알려드릴게요! 링크를 클릭하면 모집요강으로 확인할 수 있어요!\n';
+    let content = '💡답변 출처를 알려드릴게요! 출처를 클릭하면 모집요강으로 확인할 수 있어요!\n';
     // references가 null, undefined, 또는 길이가 0인 경우 체크
     if (!references || references.length === 0) {
       addMessage({ content: '출처 정보가 없습니다.', role: 'system' });
       return;
     }
     references.map((reference, index) => {
-      content += `\n출처${index + 1}번: ${reference.link}\n`;
+      content += `\n[출처 ${index + 1}번](${reference.link})\n`;
     });
     content += '\n📌 **답변을 꼭 확인해주세요!** ';
     addMessage({ content: content, role: 'system' });
