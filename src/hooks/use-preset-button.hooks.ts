@@ -87,7 +87,10 @@ const usePresetButton = () => {
       addMessage({ content: 'loading', role: 'system' });
       setLoading(true);
 
-      const response = await fetchResponse(`${detailTypeName}에 대해 설명해줘 단 아래의 출력 형식을 반드시 따라줘
+      const korean_type = type === 'SUSI' ? '수시' : type === 'JEONGSI' ? '정시' : '편입';
+
+      const response =
+        await fetchResponse(`${korean_type}의 ${detailTypeName}전형에 대해 설명해줘 단 아래의 출력 형식을 반드시 따라줘
         **[전형제목]** 
         **[전형방법]**  
         **[지원자격]**  
