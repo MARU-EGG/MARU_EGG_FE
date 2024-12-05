@@ -10,6 +10,7 @@ import { QuestionPresetButtons } from '../../user-domain/question-preset-buttons
 import Dropdown from '../../atom/dropdown/dropdown';
 import { getDetailType } from '../../../../api/get-admission-detail-type.query';
 import { useUserDetailTypeStore } from '../../../../store/user-detail-type-store';
+import { ConfigProvider } from 'antd';
 
 const ChatSection: React.FC = () => {
   const { type, category } = useTypeStore();
@@ -26,7 +27,7 @@ const ChatSection: React.FC = () => {
     messageApi.open({
       type,
       content,
-      duration: 3,
+      duration: 7,
       style: {
         position: 'absolute',
         width: 'max-content',
@@ -83,7 +84,7 @@ const ChatSection: React.FC = () => {
 
   React.useEffect(() => {
     if (category && messages[messages.length - 1]?.role === 'system' && !loading) {
-      showMessage('info', '반드시 첨부자료를 통해 정확한 정보를 확인하세요');
+      showMessage('warning', '반드시 첨부자료를 통해 정확한 정보를 확인하세요');
     }
   }, [messages, category, loading]);
 
@@ -116,7 +117,8 @@ const ChatSection: React.FC = () => {
 
   return (
     <div className="max-h-100vh w-full overflow-y-auto px-4 pb-24 pt-16">
-      {contextHolder}
+      <ConfigProvider theme={{ token: { colorWarning: '#FF0000' } }}>{contextHolder}</ConfigProvider>
+
       <ChatCard
         content={`안녕하세요.       
         명지대학교 입학 AI챗봇 마루에그입니다!           
