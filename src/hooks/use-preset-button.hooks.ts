@@ -67,7 +67,7 @@ const usePresetButton = () => {
 
       if (category === 'PASSING_RESULT' || category === 'PAST_QUESTIONS' || category === 'INTERVIEW_PRACTICAL_TEST') {
         const response = await customCategoryFetchResponse(
-          `${selectedName}전형의 모든 학과에 대한 ${question}알려줘`,
+          `${selectedName}의 모든 학과에 대한 ${question}알려줘`,
           category,
         );
         updateStateWithResponse(response);
