@@ -29,6 +29,9 @@ const useChatForm = () => {
 
   const fetchResponse = async () => {
     if (selectedId === undefined) {
+      if (content.indexOf('결과') !== -1 || content.indexOf('입결') !== -1) {
+        return await postQuestion('PASSING_RESULT', type, content);
+      }
       return await postQuestion(category, type, content);
     } else {
       return await SearchById(selectedId);
