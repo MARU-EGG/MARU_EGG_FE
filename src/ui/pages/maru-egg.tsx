@@ -13,14 +13,14 @@ const MaruEgg: React.FC = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   useEffect(() => {
-    // const isFirstVisit = localStorage.getItem('isFirstVisit') === null;
-    // if (isFirstVisit) {
-    //   setShowOnboarding(true);
-    //   localStorage.setItem('isFirstVisit', 'false');
-    // } else {
-    //   setShowOnboarding(false);
-    // }
-    window.location.href = 'https://maruegg.framer.website';
+    const isFirstVisit = localStorage.getItem('isFirstVisit') === null;
+    if (isFirstVisit) {
+      setShowOnboarding(true);
+      localStorage.setItem('isFirstVisit', 'false');
+    } else {
+      setShowOnboarding(false);
+    }
+    //   // window.location.href = 'https://maruegg.framer.website';
   }, []);
 
   const handleCloseOnboarding = () => {
